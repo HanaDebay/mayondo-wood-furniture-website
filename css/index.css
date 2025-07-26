@@ -5,7 +5,7 @@ body {
 }
 
 body {
-  background-image: url(/images/bg-images/bg1.jpg); 
+  background-image: url(images/bg-images/bg1.jpg);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -20,15 +20,15 @@ body {
   border-radius: 15px;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  height: 500px; 
-  max-height: 100vh; 
+  height: 500px;
+  max-height: 100vh;
 }
-.login-form-column{
+.login-form-column {
   padding-top: 60px;
 }
 
 .photo-side {
-  background-image: url(/images/bg-images/bg7.png);
+  background-image: url(images/bg-images/bg7.png);
   background-size: cover;
   background-position: center;
   min-height: 100%;
