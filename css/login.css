@@ -1,0 +1,42 @@
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background-image: url(/images/bg-images/bg1.jpg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-box {
+  background-color: rgba(255, 255, 255, 0.95);
+  border-radius: 15px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  height: 500px;
+  max-height: 100vh;
+}
+.login-form-column {
+  padding-top: 60px;
+}
+
+.photo-side {
+  background-image: url(/images/bg-images/bg7.png);
+  background-size: cover;
+  background-position: center;
+  min-height: 100%;
+}
+
+/* Hide the right image section on small screens (≤768px) to improve layout and mobile responsiveness */
+@media (max-width: 768px) {
+  .photo-side {
+    display: none;
+  }
+}
