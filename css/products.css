@@ -1,0 +1,74 @@
+body {
+  background: url("/images/home-furniture/img7.jpg") no-repeat center center fixed;
+  background-size: cover;
+}
+
+.navbar {
+  border: none;
+  color: aqua;
+}
+.row{
+    margin-top: 100px;
+}
+
+.nav-link:hover {
+  text-decoration: underline;
+}
+
+.navbar .nav-link {
+  color: rgba(209, 198, 198, 1) !important;
+  font-weight: 500;
+}
+
+/* Highlight active or hovered links */
+.navbar .nav-link:hover,
+.navbar .nav-link:focus {
+  text-decoration: underline;
+  color: #f8f9fa;
+}
+
+/* Style the dropdown menu */
+.dropdown-menu {
+  background-color: rgba(255, 255, 255, 0.95);
+}
+
+.dropdown-item:hover {
+  background-color: #f1f1f1;
+  color: #000;
+}
+.container{
+  margin-top: 70px;
+}
+/* Carousel image sizing */
+.carousel-inner img {
+  height: 400px;
+  align-items: center
+  
+}
+
+/* Product card images */
+.card-img-top {
+  height: 220px;
+  object-fit: cover;
+  
+}
+
+/* Section background */
+section.container {
+  background-color: rgba(255, 255, 255, 0.95);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .carousel-inner img {
+    height: 250px;
+  }
+
+  .card-img-top {
+    height: 160px;
+  }
+
+  .navbar-brand {
+    font-size: 1.2rem;
+  }
+}
