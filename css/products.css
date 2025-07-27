@@ -1,10 +1,11 @@
 body {
-  background: url("/images/bg-images/bg6.jpg") no-repeat center center fixed;
+  background: url("/images/home-furniture/img7.jpg") no-repeat center center fixed;
   background-size: cover;
 }
 
 .navbar {
   border: none;
+  color: aqua;
 }
 .row{
     margin-top: 100px;
@@ -47,8 +48,9 @@ body {
 
 /* Product card images */
 .card-img-top {
-  height: 200px;
+  height: 220px;
   object-fit: cover;
+  
 }
 
 /* Section background */
