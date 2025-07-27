@@ -1,0 +1,16 @@
+body {
+  background-image: url("/images/bg-images/bg5.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+}
+
+.navbar {
+  border: none;
+  box-shadow: none;
+}
+
+h1, h3, h5, p {
+  color: #fff;
+}
