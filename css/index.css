@@ -5,7 +5,7 @@ body {
 }
 
 body {
-  background-image: url(../images/bg-images/bg1.jpg);
+  /*background-image: url(../images/bg-images/bg1.jpg);*/
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -26,19 +26,18 @@ body {
 .login-form-column {
   padding-top: 60px;
 }
-img{
+img {
   object-fit: cover;
   height: 100%;
   width: 100%;
 }
 
 .photo-side {
-  background-image: url(../images/bg-images/bg7.png);
+  /* background-image: url(../images/bg-images/bg7.png);*/
   background-size: cover;
   background-position: center;
   min-height: 100%;
 }
-  
 
 /* Hide the right image section on small screens (≤768px) to improve layout and mobile responsiveness */
 @media (max-width: 768px) {
