@@ -28,11 +28,12 @@ body {
 }
 
 .photo-side {
-  background-image: url(/images/bg-images/bg7.png);
+  /*background-image: url(/images/bg-images/bg7.png);*/
   background-size: cover;
   background-position: center;
   min-height: 100%;
 }
+  
 
 /* Hide the right image section on small screens (≤768px) to improve layout and mobile responsiveness */
 @media (max-width: 768px) {
