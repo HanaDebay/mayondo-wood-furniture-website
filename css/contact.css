@@ -5,15 +5,81 @@ body {
   background-repeat: no-repeat;
   min-height: 100vh;
 }
+.container{
+  background-image: url(/images/bg-images/bg8.jpg);
+  background-size: cover;
+}
+/* Floating Icons on the right/left */
+.icon-menu {
+  position: fixed;
+  top: 50%;
+  right: 50px;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 1000;
+}
 
-.navbar {
-  border: none;
-  box-shadow: none;
+.icon-menu a {
+  color: rgba(6, 177, 106, 1);
+  text-decoration: none;
+  margin: 10px 0;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.icon-menu i {
+  font-size: 24px;
+  background-color: #0e0801ff;
+  padding: 12px;
+  border-radius: 50%;
+  transition: background 0.3s;
+}
+
+.icon-menu a:hover i {
+  background-color: #5cd4a6ff;
+}
+
+/* Label with slide animation */
+.icon-menu .label {
+  font-weight: 800;
+  position: absolute;
+  right: 50px;
+  background-color: #5cd4a6ff;
+  color: rgba(0, 3, 2, 1);
+  padding: 15px 20px;
+  border-radius: 10px;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateX(20px);
+  transition: opacity 0.3s, transform 0.3s;
+
+}
+
+.icon-menu a:hover .label {
+  opacity: 1;
+  transform: translateX(0);
 }
 
 .contact-section {
   min-height: 100vh;
   backdrop-filter: brightness(0.85);
+}
+#textarea,h4 {
+  font-family: 'Valestine';
+  font-weight: normal;
+  font-size: 2rem;
+  color: #0b0833ff;
+  padding-top: 70px;
+}
+
+p {
+  font-family: 'WintterBronksDemo';
+  font-weight: normal;
+  font-size: 1.1rem;
+  color: #0b0833ff;
 }
 
 h2, p, label {
@@ -28,3 +94,37 @@ button.btn-light {
   background-color: #f8f9fa;
   color: #333;
 }
+
+ /* Equal height columns */
+  .feature-box {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    height: 100%;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  /* Visible state for animation */
+  .feature-box.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  /* Icon styling */
+  .feature-icon {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    color: #007bff;
+  }
+  /* Title styling */
+  .feature-title {
+    font-weight: 600;
+    margin-bottom: 10px;
+    font-size: 1.25rem;
+  }
+  /* Description text */
+  .feature-desc {
+    font-size: 1rem;
+    color: #555;
+  }
