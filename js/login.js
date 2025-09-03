@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (username && password) {
       // Redirect to home/index page
-      window.location.href = 'home.html'; // change to 'home.html' if needed
+      window.location.href = 'dashboard.html'; 
     } else {
       alert('Please enter both username and password');
     }
