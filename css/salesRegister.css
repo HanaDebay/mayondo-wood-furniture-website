@@ -1,0 +1,20 @@
+body {
+  background: linear-gradient(#c23c95ff, #d13c61ff, #522828ff);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+.card {
+  width: 450px;
+  border-radius: 15px;
+  background-color: rgba(145, 69, 122, 1) ;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+.form-label {
+  font-weight: 600;
+  
+}
+.form-control{
+    background-color: rgb(217, 157, 223);
+}
