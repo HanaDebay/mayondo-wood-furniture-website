@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Us | MWF Ltd</title>
+    <link href="../bootstrap-5.3.7-dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lora&family=Playfair+Display&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/contact.css" />
+</head>
+
+<body>
+    <div class="icon-menu">
+        <a href="/pages/index.html">
+            <i class="fas fa-house"></i>
+            <span class="label">Home</span>
+        </a>
+        <a href="/pages/about.html">
+            <i class="fas fa-user"></i>
+            <span class="label">About</span>
+        </a>
+        <a href="/pages/products.html">
+            <i class="fas fa-couch"></i>
+            <span class="label">Product</span>
+        </a>
+        <a href="/pages/showroom.html">
+            <i class="fas fa-store"></i>
+            <span class="label">Showroom</span>
+        </a>
+        <a href="/pages/warehouse.html">
+            <i class="fas fa-warehouse"></i>
+            <span class="label">Warehouse</span>
+        </a>
+        <a href="/pages/Galary.html">
+            <i class="fas fa-images"></i>
+            <span class="label">Galary</span>
+        </a>
+        <a href="/pages/contact.html">
+            <i class="fas fa-envelope"></i>
+            <span class="label">Contact</span>
+        </a>
+    </div>
+    <div class="container">
+        <div class="row w-100 my-5 py-5">
+            <!-- Left Column: Main Description -->
+            <div class="col-md-6" id="textarea">
+                <h4>We create and deliver top-quality woodwork, stylish furniture, and innovative home & office
+                    interiors.</h4>
+            </div>
+            <!-- Right Column: Features -->
+            <div class="col-md-6">
+                <div class="feauture-container my-5">
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div class="feature-box">
+                                <i class="bi bi-building-check feature-icon"></i>
+                                <div class="feature-title">Projects</div>
+                                <p class="feature-desc">
+                                    Delivering tailored wood and furniture solutions for commercial and residential
+                                    projects of all scales.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="feature-box">
+                                <i class="fas fa-couch feature-icon"></i>
+                                <div class="feature-title">Designs</div>
+                                <p class="feature-desc">
+                                    Innovative and functional furniture designs that blend style with durability.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="feature-box">
+                                <i class="bi bi-lightbulb feature-icon"></i>
+                                <div class="feature-title">Innovations</div>
+                                <p class="feature-desc">
+                                    Utilizing modern techniques and sustainable materials to lead in quality and
+                                    efficiency.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="feature-box">
+                                <i class="bi bi-house-heart feature-icon"></i>
+                                <div class="feature-title">Home Decor</div>
+                                <p class="feature-desc">
+                                    Creating elegant and comfortable living spaces with handcrafted furniture and decor
+                                    pieces.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Contact Section -->
+    <div class="container-fluid contact-section d-flex align-items-center justify-content-center">
+        <div class="row w-100 my-5 py-5">
+            <!-- Left Image -->
+            <div class="col-md-4 d-none d-md-block">
+                <img src="../images/bg-images/contact.jpg" class="img-fluid h-100 object-fit-cover"
+                    alt="Contact Visual">
+            </div>
+            <!-- Right Content -->
+            <div class="col-md-6 text-white p-4">
+                <h2 class="mb-3">Get in Touch</h2>
+                <p>We can’t wait to work with you! Drop us a line and we’ll get back to you soon!</p>
+
+                <form class="mt-4" id="contactForm">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Your Name</label>
+                        <input type="text" class="form-control" id="name" placeholder="Enter your Name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Your Email</label>
+                        <input type="email" class="form-control" id="email" placeholder="Enter Valid email address"
+                            required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="message" class="form-label">Message</label>
+                        <textarea class="form-control" id="message" rows="4" placeholder="Your message here..."
+                            required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <input type="checkbox" id="agreement" name="agreement">
+                        <label for="agreement"> I accept the Terms of Service</label><br>
+                    </div>
+                    <button type="submit" class="btn btn-light mt-2">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Footer -->
+    <footer class="text-center text-white py-3 bg-dark bg-opacity-75">
+        <p class="mb-0">&copy; 2025 Mayondo Wood and Furniture Ltd. All rights reserved.</p>
+    </footer>
+
+    <script src="../css/bootstrap-5.3.7-dist/js/bootstrap.bundle.js"></script>
+    <script src="../js/contact.js"></script>
+</body>
+
+</html>

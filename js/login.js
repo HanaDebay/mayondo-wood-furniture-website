@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const password = passwordInput.value.trim();
 
     if (username && password) {
-      // Redirect to home/index page
+      // Redirect to manager dashboard page
       window.location.href = 'dashboard.html'; 
     } else {
       alert('Please enter both username and password');

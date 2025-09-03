@@ -5,15 +5,16 @@ body {
 }
 
 body {
-  /*background-image: url(../images/bg-images/bg1.jpg);*/
-  background-size: cover;
+  background-image: url(../images/bg-images/bg1.jpg);
   background-position: center;
   background-repeat: no-repeat;
+  background-size: cover;   /* 🔑 make the image cover the whole page */
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
 }
+
 
 .login-box {
   background-color: rgba(255, 255, 255, 0.95);
@@ -33,11 +34,11 @@ img {
 }
 
 .photo-side {
-  /* background-image: url(../images/bg-images/bg7.png);*/
-  background-size: cover;
-  background-position: center;
-  min-height: 100%;
+  background: url("../images/bg-images/bg7.png") no-repeat center center;
+  background-size: cover;   /* 🔑 fills entire section */
+  min-height: 100vh;        /* make it full height */
 }
+
 
 /* Hide the right image section on small screens (≤768px) to improve layout and mobile responsiveness */
 @media (max-width: 768px) {
