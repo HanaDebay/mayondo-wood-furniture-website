@@ -1,0 +1,203 @@
+/* Full page split screen */
+body {
+    background-color: rgba(4, 82, 43, 0.74);
+    margin: 0;
+}
+
+/* Flex container */
+.login-container {
+    display: flex;
+    height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Left side */
+.login-left {
+    flex: 1.5;
+    background: linear-gradient(135deg, #028a5c, #064420, #1b5e20);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 2rem;
+}
+
+.welcome-text h1 {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+    color: orange;
+}
+.welcome-text p {
+    font-size: 1.5rem;
+    font-weight: 300;
+}
+
+/* Right side */
+.login-right {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #e9994e, #748008, #a6e72e);
+}
+
+/* Login form */
+.login-form {
+    background: #fff;
+    padding: 2.5rem 2rem;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    width: 100%;
+    max-width: 360px;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+.login-form:hover {
+    transform: translateY(-3px);
+}
+
+.login-form h2 {
+    margin-bottom: 1.5rem;
+    color: #153858;
+}
+
+/* Inputs */
+.input-group {
+    margin-bottom: 1rem;
+}
+.input-group input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    font-size: 1rem;
+    outline: none;
+    transition: border 0.3s, box-shadow 0.3s;
+}
+.input-group input:focus {
+    border-color: #153858;
+    box-shadow: 0 0 5px rgba(21, 56, 88, 0.4);
+}
+
+/* Button */
+.btn {
+    width: 100%;
+    padding: 0.9rem;
+    border: none;
+    background: #153858;
+    color: #fff;
+    font-size: 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+}
+.btn:hover {
+    background: #0f2a3d;
+    transform: scale(1.02);
+}
+
+/* Sign up link */
+.signup-link {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+}
+.signup-link a {
+    color: #153858;
+    text-decoration: none;
+    font-weight: bold;
+}
+.signup-link a:hover {
+    text-decoration: underline;
+}
+
+/* Forgot Password */
+.forgot-password {
+    margin-top: 0.8rem;
+    font-size: 0.9rem;
+}
+.forgot-password a {
+    color: #153858;
+    text-decoration: none;
+    font-weight: 500;
+}
+.forgot-password a:hover {
+    text-decoration: underline;
+}
+
+/* Divider */
+.divider {
+    margin: 1.5rem 0;
+    text-align: center;
+    position: relative;
+}
+.divider span {
+    background: #fff;
+    padding: 0 10px;
+    position: relative;
+    z-index: 1;
+}
+.divider::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: #ddd;
+    z-index: 0;
+}
+
+/* Social Login */
+.social-login {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+.social-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 0.7rem;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: transform 0.2s, opacity 0.2s;
+}
+.social-btn:hover {
+    transform: translateY(-2px);
+    opacity: 0.9;
+}
+
+/* Specific button colors */
+.google {
+    background: #fff;
+    border: 1px solid #ddd;
+    color: #444;
+}
+.github {
+    background: #24292e;
+    color: #fff;
+}
+.linkedin {
+    background: #0077b5;
+    color: #fff;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .login-container {
+        flex-direction: column;
+    }
+    .login-left {
+        display: none; /* hide left side on small screens */
+    }
+    .login-right {
+        flex: none;
+        width: 100%;
+        padding: 2rem;
+    }
+}
