@@ -1,27 +1,42 @@
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById("signupForm");
 
-  const signupForm = document.getElementById('signupForm');
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-  signupForm.addEventListener('submit', function(e) {
-    e.preventDefault(); // Prevent default form submission
-
-    // Optional: you can validate passwords here
-    const password = signupForm.password.value;
-    const confirmPassword = signupForm.confirmPassword.value;
+    const fullName = document.getElementById("fullName").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const username = document.getElementById("username").value.trim();
+    const role = document.getElementById("role").value;
+    const password = document.getElementById("password").value;
+    const confirmPassword = document.getElementById("confirmPassword").value;
 
     if (password !== confirmPassword) {
       alert("Passwords do not match!");
       return;
     }
 
-    // Optional: store data in localStorage if you want to keep it temporarily
-    const managerData = {
-      name: signupForm.name.value,
-      email: signupForm.email.value,
-      password: password
-    };
-    localStorage.setItem('manager', JSON.stringify(managerData));
+    try {
+      const res = await fetch("/register-user", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ fullName, email, phone, username, role, password, confirmPassword }),
+      });
 
-    // Redirect to login page
-    window.location.href = 'login.html';
+      const data = await res.json();
+
+      if (res.ok) {
+        alert("User registered successfully as " + role);
+        window.location.href = "/login";
+      } else {
+        alert("Error: " + data.error);
+      }
+    } catch (err) {
+      console.error("Signup Error:", err);
+      alert("Something went wrong, please try again.");
+    }
   });
-
+});

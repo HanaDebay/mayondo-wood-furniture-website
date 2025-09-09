@@ -1,0 +1,71 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    title MWF | Register User
+    link(rel="stylesheet" href="../css/signup.css")
+  body
+    header.site-header
+      h1 Mayondo Wood & Furniture (MWF) Ltd
+      p.subtitle Register Manager / Sales Agent
+
+    main.container
+      section.tab-panel.active
+        .form-wrapper
+          form.card#signupForm(action="/register-user" method="POST" autocomplete="on" novalidate)
+            h2 Register User
+            .grid
+              .field
+                label(for="fullName") Full Name
+                  span *
+                input#fullName(type="text" name="fullName" placeholder="e.g., Hana Debay" required)
+
+              .field
+                label(for="email") Email
+                  span *
+                input#email(type="email" name="email" placeholder="user@mwfuganda.com" required)
+
+              .field
+                label(for="phone") Phone
+                  span *
+                input#phone(type="tel" name="phone" placeholder="+256 7xx xxx xxx" required pattern="[+0-9\s-]{7,}")
+
+              .field
+                label(for="username") Username
+                  span *
+                input#username(type="text" name="username" minlength="3" maxlength="24" required)
+
+              .field
+                label(for="role") Role
+                  span *
+                select#role(name="role" required)
+                  option(value="") -- Select Role --
+                  option(value="Manager") Manager
+                  option(value="Sales-Agent") Sales Agent
+
+              .field
+                label(for="password") Password
+                  span *
+                input#password(type="password" name="password" minlength="6" required)
+
+              .field
+                label(for="confirmPassword") Confirm Password
+                  span *
+                input#confirmPassword(type="password" name="confirmPassword" minlength="6" required)
+
+            .actions
+              button.btn.primary(type="submit") Create Account
+              button.btn.ghost(type="reset") Clear
+
+            p.hint By submitting, you agree that all provided information is accurate.
+
+          .form-image
+            img(src="../images/signupSideImg.jpg" alt="User Registration")
+
+    footer.site-footer
+      small © 
+        span#year
+        |  MWF Ltd • All rights reserved.
+
+    script(src="../js/signup.js")

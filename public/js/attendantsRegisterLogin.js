@@ -4,7 +4,7 @@ document.getElementById("loginForm").addEventListener("submit", function (e) {
   const username = document.getElementById("username").value.trim();
   const password = document.getElementById("password").value.trim();
 
-  // ⚠️ Temporary mock users (replace with backend later)
+  // Temporary mock users (replace with backend later)
   const users = [
     { username: "manager1", password: "1234", role: "manager" },
     { username: "sales1", password: "1234", role: "sales" },
