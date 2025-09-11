@@ -23,7 +23,15 @@ document.addEventListener("DOMContentLoaded", () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ fullName, email, phone, username, role, password, confirmPassword }),
+        body: JSON.stringify({
+          fullName,
+          email,
+          phone,
+          username,
+          role,
+          password,
+          confirmPassword,
+        }),
       });
 
       const data = await res.json();
@@ -40,3 +48,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+// JS for toggler
+document.addEventListener("DOMContentLoaded", () => {
+  const toggle = document.querySelector(".nav-toggle");
+  const links = document.querySelector(".nav-links");
+  toggle.addEventListener("click", () => {
+    links.classList.toggle("active");
+  });
+});
+

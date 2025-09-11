@@ -16,7 +16,7 @@ const furnitureStockSchema = new mongoose.Schema({
     required: [true, 'Furniture type is required'],
     enum: [
       'bed', 'sofa', 'dining', 'cupboard', 'drawers',
-      'desk', 'chair', 'shelf', 'wardrobe', 'tv-stand'
+      'desk', 'chair', 'shelf', 'wardrobe', 'tv-stand','Table'
     ] 
   },
   costPrice: {
@@ -39,7 +39,7 @@ const furnitureStockSchema = new mongoose.Schema({
     required: [true, 'Supplier name is required'],
     trim: true
   },
-  dateReceived: {
+  date: {
     type: Date,
     required: [true, 'Date received is required']
   },
@@ -56,10 +56,10 @@ const furnitureStockSchema = new mongoose.Schema({
     type: String,
     trim: true 
   },
-  createdAt: {
-    type: Date,
-    default: Date.now
-  }
+  // createdAt: {
+  //   type: Date,
+  //   default: Date.now
+  // }
 });
 
 module.exports = mongoose.model('FurnitureStock', furnitureStockSchema);

@@ -6,10 +6,38 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Register Wood Stock | MWF Ltd</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="../public/css/woodStock.css" rel="stylesheet">
+  <link href="../css/woodStock.css" rel="stylesheet">
 </head>
 
 <body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/pages/index.html">MWF</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/pages/dashboard.html">Dashboard</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/pages/userSignup.html">Register Attendants</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/pages/registerFurnitureStock.html">Register Furniture</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/logout">Logout</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main content -->
   <div class="container py-5">
     <div class="row justify-content-center">
       <div class="col-lg-8">
@@ -43,8 +71,7 @@
                     required>
                 </div>
                 <div class="col-md-4">
-                  <label for="sellingPrice" class="form-label">Selling Price (UGX) <span
-                      class="text-danger">*</span></label>
+                  <label for="sellingPrice" class="form-label">Selling Price (UGX) <span class="text-danger">*</span></label>
                   <input type="number" class="form-control" id="sellingPrice" name="sellingPrice" min="0" step="0.01"
                     required>
                 </div>
@@ -101,9 +128,14 @@
     </div>
   </div>
 
+  <!-- Footer -->
+  <footer class="bg-dark text-white text-center py-3 mt-5">
+    <p class="mb-0">© <span id="year"></span> MWF Ltd • All rights reserved.</p>
+  </footer>
+
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="../public/js/woodStock.js"></script>
+  <script src="../js/woodStock.js"></script>
 </body>
 
 </html>

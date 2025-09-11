@@ -31,7 +31,7 @@ const woodStockSchema = new mongoose.Schema({
     required: true,
     trim: true
   },
-  dateReceived: {
+  date: {
     type: Date,
     required: true
   },
@@ -48,10 +48,10 @@ const woodStockSchema = new mongoose.Schema({
     type: String,
     trim: true
   },
-  createdAt: {
-    type: Date,
-    default: Date.now
-  }
+  // createdAt: {
+  //   type: Date,
+  //   default: Date.now
+  // }
 });
 
 module.exports = mongoose.model('WoodStock', woodStockSchema);

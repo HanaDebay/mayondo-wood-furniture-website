@@ -11,6 +11,8 @@ require("dotenv").config();
 const User = require("./models/userModel")
 // 2. Import Routes
 const authRoutes = require("./routes/authRoutes");
+const stockRoutes = require("./routes/stockRoutes");
+const userRoutes = require("./routes/userRoutes");
 
 // 3. Instantiations
 const app = express();
@@ -57,6 +59,8 @@ app.use(express.static(path.join(__dirname, "public")));
 // 6. Routes
 //  using imported routes
 app.use("/", authRoutes);
+app.use("/", stockRoutes);
+app.use("/", userRoutes);
 
 
 // Server

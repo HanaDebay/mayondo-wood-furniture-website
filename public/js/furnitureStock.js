@@ -18,7 +18,9 @@ document.addEventListener("DOMContentLoaded", () => {
     { value: "desk", text: "Desk" },
     { value: "chair", text: "Chair" },
     { value: "shelf", text: "Shelf" },
-    { value: "drawers", text: "Drawers" }
+    { value: "drawers", text: "Drawers" },
+    { value: "Table", text: "Table" }
+
   ];
 
   productType.addEventListener("change", () => {

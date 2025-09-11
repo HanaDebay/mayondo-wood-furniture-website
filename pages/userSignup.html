@@ -1,82 +1,114 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MWF | Register User</title>
-  <link rel="stylesheet" href="../public/css/signup.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../css/signup.css">
 </head>
+
 <body>
-  <header class="site-header">
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/pages/index.html">MWF</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="/pages/dashboard.html">Dashboard</a></li>
+          <li class="nav-item"><a class="nav-link" href="/pages/registerWoodStock.html">Register Wood Stock</a></li>
+          <li class="nav-item"><a class="nav-link" href="/pages/registerFurnitureStock.html">Register Furniture</a></li>
+          <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <header class="site-header text-center my-4">
     <h1>Mayondo Wood & Furniture (MWF) Ltd</h1>
     <p class="subtitle">Register Manager / Sales Agent</p>
   </header>
 
+  <!-- Main -->
   <main class="container">
     <section class="tab-panel active">
-      <div class="form-wrapper">
-        <form class="card" id="signupForm" action="/register-user" method="POST" autocomplete="on" novalidate>
-          <h2>Register User</h2>
-          <div class="grid">
-            <div class="field">
-              <label for="fullName">Full Name<span>*</span></label>
-              <input id="fullName" type="text" name="fullName" placeholder="e.g., Hana Debay" required>
+      <div class="row align-items-center">
+        <!-- Form -->
+        <div class="col-lg-7">
+          <form class="card shadow-lg p-4 rounded-4" id="signupForm" action="/register-user" method="POST"
+            autocomplete="on" novalidate>
+            <h2 class="text-center mb-4">Register User</h2>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label for="fullName" class="form-label">Full Name<span class="text-danger">*</span></label>
+                <input id="fullName" type="text" class="form-control" name="fullName" placeholder="e.g., Hana Debay"
+                  required>
+              </div>
+              <div class="col-md-6">
+                <label for="email" class="form-label">Email<span class="text-danger">*</span></label>
+                <input id="email" type="email" class="form-control" name="email" placeholder="user@mwfuganda.com"
+                  required>
+              </div>
+              <div class="col-md-6">
+                <label for="phone" class="form-label">Phone<span class="text-danger">*</span></label>
+                <input id="phone" type="tel" class="form-control" name="phone" placeholder="+256 7xx xxx xxx" required
+                  pattern="[+0-9\s-]{7,}">
+              </div>
+              <div class="col-md-6">
+                <label for="username" class="form-label">Username<span class="text-danger">*</span></label>
+                <input id="username" type="text" class="form-control" name="username" minlength="3" maxlength="24"
+                  required>
+              </div>
+              <div class="col-md-6">
+                <label for="role" class="form-label">Role<span class="text-danger">*</span></label>
+                <select id="role" class="form-select" name="role" required>
+                  <option value="">-- Select Role --</option>
+                  <option value="Manager">Manager</option>
+                  <option value="Sales-Agent">Sales Agent</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label for="password" class="form-label">Password<span class="text-danger">*</span></label>
+                <input id="password" type="password" class="form-control" name="password" minlength="6" required>
+              </div>
+              <div class="col-md-6">
+                <label for="confirmPassword" class="form-label">Confirm Password<span class="text-danger">*</span></label>
+                <input id="confirmPassword" type="password" class="form-control" name="confirmPassword" minlength="6"
+                  required>
+              </div>
             </div>
 
-            <div class="field">
-              <label for="email">Email<span>*</span></label>
-              <input id="email" type="email" name="email" placeholder="user@mwfuganda.com" required>
+            <div class="d-flex justify-content-between mt-4">
+              <button type="submit" class="btn btn-primary">Create Account</button>
+              <button type="reset" class="btn btn-outline-secondary">Clear</button>
             </div>
 
-            <div class="field">
-              <label for="phone">Phone<span>*</span></label>
-              <input id="phone" type="tel" name="phone" placeholder="+256 7xx xxx xxx" required pattern="[+0-9\s-]{7,}">
-            </div>
+            <p class="text-muted mt-3 small">By submitting, you agree that all provided information is accurate.</p>
+          </form>
+        </div>
 
-            <div class="field">
-              <label for="username">Username<span>*</span></label>
-              <input id="username" type="text" name="username" minlength="3" maxlength="24" required>
-            </div>
-
-            <div class="field">
-              <label for="role">Role<span>*</span></label>
-              <select id="role" name="role" required>
-                <option value="">-- Select Role --</option>
-                <option value="Manager">Manager</option>
-                <option value="Sales-Agent">Sales Agent</option>
-              </select>
-            </div>
-
-            <div class="field">
-              <label for="password">Password<span>*</span></label>
-              <input id="password" type="password" name="password" minlength="6" required>
-            </div>
-
-            <div class="field">
-              <label for="confirmPassword">Confirm Password<span>*</span></label>
-              <input id="confirmPassword" type="password" name="confirmPassword" minlength="6" required>
-            </div>
-          </div>
-
-          <div class="actions">
-            <button type="submit" class="btn primary">Create Account</button>
-            <button type="reset" class="btn ghost">Clear</button>
-          </div>
-
-          <p class="hint">By submitting, you agree that all provided information is accurate.</p>
-        </form>
-
-        <div class="form-image">
-          <img src="../public/images/signupSideImg.jpg" alt="User Registration">
+        <!-- Side Image -->
+        <div class="col-lg-5 text-center mt-4 mt-lg-0">
+          <img src="../public/images/signupSideImg.jpg" alt="User Registration" class="img-fluid rounded-4 shadow">
         </div>
       </div>
     </section>
   </main>
 
-  <footer class="site-footer">
+  <!-- Footer -->
+  <footer class="site-footer bg-dark text-white text-center py-3 mt-5">
     <small>© <span id="year"></span> MWF Ltd • All rights reserved.</small>
   </footer>
 
-  <script src="../public/js/signup.js"></script>
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../js/signup.js"></script>
 </body>
+
 </html>

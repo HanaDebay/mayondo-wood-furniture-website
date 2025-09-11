@@ -1,0 +1,109 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    title MWF Manager Dashboard
+    link(href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet")
+    link(href="../css/dashboard.css" rel="stylesheet")
+
+  body
+    // Sidebar
+    .sidebar
+      img.profile-img(src="../images/managerProfile.jpg" alt="Manager Photo")
+      h4#managerName Manager Name
+      a(href="#") 📊 Dashboard
+      a(href="/register-user") 👨‍💼 Register Sales-Agent
+      a(href="#") 🏭 Register Supplier
+      a(href="/registerFurniture") 🛋️ Add Furniture Stock
+      a(href="/registerWood") 🪵 Add Wood Stock
+      a(href="#") 💰 Generate Sales Reports
+      a(href="/display-users") 🧑‍💼 View Users
+      a(href="#") 📄 View Stock
+      hr
+      a(href="/index") 🏠 Home
+      hr
+      a.text-danger(href="/logout") 🚪 Logout
+
+    // Content Area
+    .content
+      h2.mb-4 📊 Manager Dashboard
+
+      // Top Cards
+      .row.mb-4
+        .col-md-3
+          .card.p-3
+            h6 Total Stock
+            h3#totalStock 12,450
+        .col-md-3
+          .card.p-3
+            h6 Total Sales (Month)
+            h3#totalSales $54,200
+        .col-md-3
+          .card.p-3
+            h6 Attendants
+            h3#attendants 8
+        .col-md-3
+          .card.p-3
+            h6 Suppliers
+            h3#suppliers 15
+
+      // Charts
+      .row.mb-4
+        .col-md-6
+          .card.p-3
+            h6 Sales Per Attendant
+            canvas#barChart
+        .col-md-6
+          .card.p-3
+            h6 Product Category Breakdown
+            canvas#pieChart
+
+      // Sales Trend
+      .row.mb-4
+        .col-md-12
+          .card.p-3
+            h6 Monthly Sales Trend
+            canvas#lineChart
+
+      // Top Customers & Attendant Activity
+      .row
+        .col-md-6
+          .card.p-3
+            h6 Top Customers
+            ul#topCustomers.list-group
+              li.list-group-item XYZ Construction - $45,000
+              li.list-group-item ABC Building Co. - $33,500
+              li.list-group-item HomeStyle Furnitures - $28,700
+              li.list-group-item City Works Ltd - $22,100
+              li.list-group-item National Housing - $18,900
+
+        .col-md-6
+          .card.p-3
+            h6 Attendant Activity Log
+            table.table.table-sm.table-striped
+              thead
+                tr
+                  th Name
+                  th Action
+                  th Date
+              tbody
+                tr
+                  td John
+                  td Recorded Sale
+                  td 2025-08-25
+                tr
+                  td Mary
+                  td Recorded Sale
+                  td 2025-08-26
+                tr
+                  td Paul
+                  td Issued Receipt
+                  td 2025-08-27
+                tr
+                  td Jane
+                  td Recorded Sale
+                  td 2025-08-28
+
+    script(src="../js/dashboard.js")
+    script(src="https://cdn.jsdelivr.net/npm/chart.js")

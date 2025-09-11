@@ -6,6 +6,21 @@ html(lang="en")
     title MWF | Register User
     link(rel="stylesheet" href="../css/signup.css")
   body
+    nav.navbar
+      .navbar-container
+        .brand
+          a(href="/") MWF
+          button.nav-toggle(type="button" aria-label="Toggle navigation") ☰
+        ul.nav-links
+          li
+            a(href="/dashboard") Dashboard
+          li
+            a(href="/registerWood") Register Wood Stock
+          li
+            a(href="/registerFurniture") Register Furniture Stock
+          li
+            a(href="/logout") Logout 
+
     header.site-header
       h1 Mayondo Wood & Furniture (MWF) Ltd
       p.subtitle Register Manager / Sales Agent
@@ -68,4 +83,5 @@ html(lang="en")
         span#year
         |  MWF Ltd • All rights reserved.
 
-    script(src="../js/signup.js")
+    //- script(src="../js/signup.js")
+    
