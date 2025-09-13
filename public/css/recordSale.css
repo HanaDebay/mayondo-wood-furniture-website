@@ -1,0 +1,25 @@
+body {
+  background-color: #f7f7f8;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.card {
+  border-radius: 16px;
+}
+
+.card-header {
+  border-top-left-radius: 16px !important;
+  border-top-right-radius: 16px !important;
+}
+
+footer {
+  font-size: 0.9rem;
+}
+
+.btn-info {
+  background-color: #0ea5e9;
+  border: none;
+}
+.btn-info:hover {
+  background-color: #0284c7;
+}

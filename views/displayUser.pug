@@ -1,0 +1,41 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    title Display Users | MWF Ltd
+    link(rel="stylesheet" href="../css/usersDisplay.css")
+  body
+
+    main.container
+      h1 User Management
+      table.user-table
+        thead
+          tr
+            th # 
+            th Full Name
+            th Username
+            th Email
+            th Phone
+            th Role
+            th Status
+            th Actions
+        tbody
+          each user, index in users
+            tr
+              td #{index + 1}
+              td #{user.fullName}
+              td #{user.username}
+              td #{user.email}
+              td #{user.phone}
+              td #{user.role}
+              td
+                if user.status == "Active"
+                  span.badge.active Active
+                else
+                  span.badge.inactive Inactive
+              td.actions
+                a.btn.edit(href=`/edit-user/${user._id}`) ✏️ Edit
+                form(action=`/delete-user/${user._id}?_method=DELETE` method="POST" style="display:inline")
+                  button.btn.delete(type="submit" onclick="return confirm('Are you sure?')") 🗑 Delete
+      script(src="../js/usersDisplay.js")

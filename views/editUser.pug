@@ -1,0 +1,81 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    title Edit User | MWF Ltd
+    link(rel="stylesheet" href="../css/signup.css")
+  body
+    nav.navbar
+      .navbar-container
+        .brand
+          a(href="/") MWF
+          button.nav-toggle(type="button" aria-label="Toggle navigation") ☰
+        ul.nav-links
+          li
+            a(href="/manager-dashboard") Dashboard
+          li
+            a(href="/registerWood") Register Wood Stock
+          li
+            a(href="/registerFurniture") Register Furniture Stock
+          li
+            a(href="/display-users") View Users
+          li
+            a.text-danger(href="/logout") Logout 
+
+    header.site-header
+      h1 Mayondo Wood & Furniture (MWF) Ltd
+      p.subtitle Edit User Information
+
+    main.container
+      section.tab-panel.active
+        .form-wrapper
+          form.card(action=`/edit-user/${user._id}` method="POST" autocomplete="on" novalidate)
+            h2 Edit User
+            .grid
+              .field
+                label(for="fullName") Full Name
+                  span *
+                input#fullName(type="text" name="fullName" value=user.fullName required)
+
+              .field
+                label(for="email") Email
+                  span *
+                input#email(type="email" name="email" value=user.email required)
+
+              .field
+                label(for="phone") Phone
+                  span *
+                input#phone(type="tel" name="phone" value=user.phone required pattern="[+0-9\s-]{7,}")
+
+              .field
+                label(for="username") Username
+                  span *
+                input#username(type="text" name="username" value=user.username minlength="3" maxlength="24" required)
+
+              .field
+                label(for="role") Role
+                  span *
+                select#role(name="role" required)
+                  option(value="") -- Select Role --
+                  option(value="Manager" selected=(user.role=="Manager")) Manager
+                  option(value="Sales-Agent" selected=(user.role=="Sales-Agent")) Sales Agent
+
+              .field
+                label(for="status") Status
+                  span *
+                select#status(name="status" required)
+                  option(value="Active" selected=(user.status=="Active")) Active
+                  option(value="Inactive" selected=(user.status=="Inactive")) Inactive
+
+            .actions
+              button.btn.primary(type="submit") Update User
+              a.btn.ghost(href="/displayUsers") Cancel
+
+          .form-image
+            img(src="../images/signupSideImg.jpg" alt="Edit User")
+
+    footer.site-footer
+      small © 
+        span#year
+        |  MWF Ltd • All rights reserved.

@@ -11,7 +11,8 @@ require("dotenv").config();
 const User = require("./models/userModel")
 // 2. Import Routes
 const authRoutes = require("./routes/authRoutes");
-const stockRoutes = require("./routes/stockRoutes");
+const furnitureStockRoutes = require("./routes/FurnitureStockRoutes")
+const woodStockRoutes = require("./routes/woodStockRoutes")
 const userRoutes = require("./routes/userRoutes");
 const supplierRoutes = require("./routes/supplierRoutes");
 
@@ -60,7 +61,8 @@ app.use(express.static(path.join(__dirname, "public")));
 // 6. Routes
 //  using imported routes
 app.use("/", authRoutes);
-app.use("/", stockRoutes);
+app.use("/", furnitureStockRoutes);
+app.use("/", woodStockRoutes);
 app.use("/", userRoutes);
 app.use("/", supplierRoutes);
 

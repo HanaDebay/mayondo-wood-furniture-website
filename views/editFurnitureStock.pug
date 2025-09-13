@@ -1,0 +1,105 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    title Edit Furniture Stock | MWF Ltd
+    link(rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css")
+    link(rel="stylesheet" href="../css/furnitureStock.css")
+  body
+    nav.navbar
+      .navbar-container
+        .brand
+          a(href="/") MWF
+        ul.nav-links#navLinks
+          li
+            a(href="/manager-dashboard") Dashboard
+          li
+            a(href="/register-user") Register Sales-Agent
+          li
+            a(href="/registerWood") Register Wood Stock
+          li
+            a(href="/register-supplier") Register Supplier
+          li
+            a(href="/logout") Logout
+        button.nav-toggle(type="button" id="navToggle" aria-label="Toggle navigation") ☰
+
+    .container.py-5
+      .row.justify-content-center
+        .col-lg-8
+          .card.shadow-lg.rounded-4
+            .card-header.bg-success.text-white.text-center.py-3.rounded-top-4
+              h3 Edit Furniture Stock
+            .card-body.p-4
+              form(action=`/updateFurniture/${item._id}` method="POST" autocomplete="on" novalidate)
+                .mb-3
+                  label.form-label(for="productName") Product Name 
+                    span.text-danger *
+                  input#productName.form-control(
+                    type="text" name="productName" 
+                    placeholder="e.g., Office Desk" 
+                    required value=item.productName
+                  )
+
+                .mb-3
+                  label.form-label(for="productType") Product Type 
+                    span.text-danger *
+                  select#productType.form-select(name="productType" required)
+                    option(value="furniture-home" selected=item.productType=='furniture-home') Home Furniture
+                    option(value="furniture-office" selected=item.productType=='furniture-office') Office Furniture
+
+                .mb-3#furnitureOptions
+                  label.form-label(for="furnitureType") Furniture Type 
+                    span.text-danger *
+                  select#furnitureType.form-select(name="furnitureType")
+                    option(value="" disabled selected)= item.furnitureType || "Select furniture type"
+
+                .row.g-3
+                  .col-md-4
+                    label.form-label(for="costPrice") Cost Price (UGX) 
+                      span.text-danger *
+                    input#costPrice.form-control(type="number" name="costPrice" min="0" step="0.01" required value=item.costPrice)
+                  .col-md-4
+                    label.form-label(for="sellingPrice") Selling Price (UGX) 
+                      span.text-danger *
+                    input#sellingPrice.form-control(type="number" name="sellingPrice" min="0" step="0.01" required value=item.sellingPrice)
+                  .col-md-4
+                    label.form-label(for="quantity") Quantity 
+                      span.text-danger *
+                    input#quantity.form-control(type="number" name="quantity" min="0" step="1" required value=item.quantity)
+
+                .mb-3.mt-3
+                  label.form-label(for="supplierName") Supplier Name 
+                    span.text-danger *
+                  input#supplierName.form-control(type="text" name="supplierName" placeholder="e.g., Kibaale Timbers Ltd" required value=item.supplierName)
+
+                .row.g-3
+                  .col-md-6
+                    label.form-label(for="date") Date Received 
+                      span.text-danger *
+                    input#date.form-control(type="date" name="date" required value=item.date.toISOString().substring(0,10))
+                  .col-md-6
+                    label.form-label(for="quality") Quality Grade 
+                      span.text-danger *
+                    select#quality.form-select(name="quality" required)
+                      option(value="A" selected=item.quality=='A') A (Premium)
+                      option(value="B" selected=item.quality=='B') B (Standard)
+                      option(value="C" selected=item.quality=='C') C (Economy)
+
+                .mb-3.mt-3
+                  label.form-label(for="color") Color 
+                    span.text-muted (optional)
+                  input#color.form-control(type="text" name="color" placeholder="e.g., Walnut / Black" value=item.color)
+
+                .mb-3
+                  label.form-label(for="measurements") Measurements 
+                    span.text-muted (optional)
+                  input#measurements.form-control(type="text" name="measurements" placeholder="e.g., 180x60x75 cm" value=item.measurements)
+
+                .d-flex.justify-content-between.mt-4
+                  button.btn.btn-success(type="submit") Update Stock
+                  a.btn.btn-outline-secondary(href="/view-furniture-stock") Cancel
+
+                p.text-muted.mt-2 Ensure details match the delivery note before saving.
+
+    script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js")

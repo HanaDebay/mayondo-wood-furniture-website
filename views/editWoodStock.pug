@@ -1,0 +1,108 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    title Edit Wood Stock | MWF Ltd
+    link(rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css")
+    link(rel="stylesheet" href="../css/woodStock.css")
+  body
+    // Navbar
+    nav.navbar.navbar-expand-lg.navbar-dark
+      .container-fluid
+        a.navbar-brand(href="#") MWF
+        button.navbar-toggler(type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav")
+          span.navbar-toggler-icon
+        #navbarNav.collapse.navbar-collapse
+          ul.navbar-nav.ms-auto
+            li.nav-item
+              a.nav-link(href="/manager-dashboard") Dashboard
+            li.nav-item
+              a.nav-link(href="/register-user") Register Sales-Agent
+            li.nav-item
+              a.nav-link(href="/registerFurniture") Register Furniture
+            li.nav-item
+              a.nav-link(href="/register-supplier") Register Supplier
+            li.nav-item
+              a.nav-link(href="/logout") Logout
+
+    .container.py-5
+      .row.justify-content-center
+        .col-lg-8
+          .card.shadow-lg.rounded-4
+            .card-header.bg-primary.text-white.text-center.py-3.rounded-top-4
+              h3 Edit Wood Stock
+            .card-body.p-4
+              form(action=`/updateWood/${item._id}` method="POST" autocomplete="on" novalidate)
+                .mb-3
+                  label.form-label(for="productName") Product Name 
+                    span.text-danger *
+                  input#productName.form-control(
+                    type="text" name="productName" placeholder="e.g., Mukasa Hardwood Plank" required value=item.productName
+                  )
+
+                .mb-3
+                  label.form-label(for="productType") Product Type 
+                    span.text-danger *
+                  select#productType.form-select(name="productType" required)
+                    option(value="timber" selected=item.productType=='timber') Timber
+                    option(value="poles" selected=item.productType=='poles') Poles
+                    option(value="hardwood" selected=item.productType=='hardwood') Hardwood
+                    option(value="softwood" selected=item.productType=='softwood') Softwood
+
+                .row.g-3
+                  .col-md-4
+                    label.form-label(for="costPrice") Cost Price (UGX) 
+                      span.text-danger *
+                    input#costPrice.form-control(type="number" name="costPrice" min="0" step="0.01" required value=item.costPrice)
+                  .col-md-4
+                    label.form-label(for="sellingPrice") Selling Price (UGX) 
+                      span.text-danger *
+                    input#sellingPrice.form-control(type="number" name="sellingPrice" min="0" step="0.01" required value=item.sellingPrice)
+                  .col-md-4
+                    label.form-label(for="quantity") Quantity 
+                      span.text-danger *
+                    input#quantity.form-control(type="number" name="quantity" min="0" step="1" required value=item.quantity)
+
+                .mb-3.mt-3
+                  label.form-label(for="supplierName") Supplier Name 
+                    span.text-danger *
+                  input#supplierName.form-control(type="text" name="supplierName" placeholder="e.g., Kibaale Timbers Ltd" required value=item.supplierName)
+
+                .row.g-3
+                  .col-md-6
+                    label.form-label(for="date") Date Received 
+                      span.text-danger *
+                    input#date.form-control(type="date" name="date" required value=item.date.toISOString().substring(0,10))
+                  .col-md-6
+                    label.form-label(for="quality") Quality Grade 
+                      span.text-danger *
+                    select#quality.form-select(name="quality" required)
+                      option(value="A" selected=item.quality=='A') A (Premium)
+                      option(value="B" selected=item.quality=='B') B (Standard)
+                      option(value="C" selected=item.quality=='C') C (Economy)
+
+                .mb-3.mt-3
+                  label.form-label(for="color") Color 
+                    span.text-muted (optional)
+                  input#color.form-control(type="text" name="color" placeholder="e.g., Natural / Walnut" value=item.color)
+
+                .mb-3
+                  label.form-label(for="measurements") Measurements 
+                    span.text-muted (optional)
+                  input#measurements.form-control(type="text" name="measurements" placeholder="e.g., 2x4x12 ft / 180x60 cm" value=item.measurements)
+
+                .d-flex.justify-content-between.mt-4
+                  button.btn.btn-primary(type="submit") Update Stock
+                  a.btn.btn-outline-secondary(href="/view-wood-stock") Cancel
+
+                p.text-muted.mt-2 Ensure details match the delivery note before saving.
+
+    // Footer
+    footer.text-white.text-center.py-3.mt-5
+      p.mb-0 © 
+        span#year
+        |  MWF Ltd • All rights reserved.
+
+    // Bootstrap JS
+    script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js")

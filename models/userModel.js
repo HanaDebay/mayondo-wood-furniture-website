@@ -34,6 +34,9 @@ const signupSchema = new mongoose.Schema(
       unique: true,
       trim: true,
     },
+    status: { 
+      type: String, 
+      enum: ["Active", "Left"], default: "Active" } 
     // password: {
     //   type: String,
     //   required: true,
