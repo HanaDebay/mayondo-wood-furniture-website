@@ -60,7 +60,7 @@ body {
   gap: 1.5rem;
   margin: 0;
   padding: 0;
-  margin-left: 45rem;
+  margin-left: 35rem;
 }
 
 .nav-links li a {
@@ -72,6 +72,7 @@ body {
 
 .nav-links li a:hover {
   color: #f39c12;
+  font-weight: bold;
 }
 
 /* Toggle button */

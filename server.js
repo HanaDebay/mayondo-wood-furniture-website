@@ -13,6 +13,7 @@ const User = require("./models/userModel")
 const authRoutes = require("./routes/authRoutes");
 const stockRoutes = require("./routes/stockRoutes");
 const userRoutes = require("./routes/userRoutes");
+const supplierRoutes = require("./routes/supplierRoutes");
 
 // 3. Instantiations
 const app = express();
@@ -61,6 +62,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/", authRoutes);
 app.use("/", stockRoutes);
 app.use("/", userRoutes);
+app.use("/", supplierRoutes);
 
 
 // Server

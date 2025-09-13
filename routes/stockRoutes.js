@@ -37,4 +37,31 @@ router.post("/registerWood", async (req, res) => {
   }
 });
 
+
+
+// GET furniture stock
+router.get("/api/furniture-stock", async (req, res) => {
+  try {
+    const { furnitureType } = req.query;
+    const query = {};
+    if (furnitureType) query.furnitureType = furnitureType;
+    const stock = await FurnitureStockModel.find(query).select("productName quantity");
+    res.json(stock);
+  } catch (err) {
+    res.status(500).json({ error: "Failed to fetch furniture stock" });
+  }
+});
+
+// GET wood stock
+router.get("/api/wood-stock", async (req, res) => {
+  try {
+    const stock = await WoodStockModel.find().select("productName quantity");
+    res.json(stock);
+  } catch (err) {
+    res.status(500).json({ error: "Failed to fetch wood stock" });
+  }
+});
+
+
+
 module.exports = router;

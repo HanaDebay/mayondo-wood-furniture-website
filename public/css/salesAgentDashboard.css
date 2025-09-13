@@ -1,0 +1,57 @@
+body {
+  display: flex;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+}
+
+.sidebar {
+  width: 220px;
+  background: #1f2937;
+  color: white;
+  padding: 1rem;
+  flex-shrink: 0;
+}
+
+.sidebar img.profile-img {
+  width: 80px;
+  border-radius: 50%;
+  display: block;
+  margin: 0 auto 0.5rem;
+}
+
+.sidebar h4 {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.sidebar a {
+  display: block;
+  padding: 0.5rem;
+  color: white;
+  text-decoration: none;
+  margin-bottom: 0.3rem;
+}
+
+.sidebar a.text-danger {
+  color: #f87171;
+}
+
+.sidebar a:hover {
+  background: #374151;
+  border-radius: 5px;
+}
+
+.content {
+  flex: 1;
+  padding: 2rem;
+  background: #f7f7f8;
+}
+
+.card h6 {
+  font-weight: bold;
+}
+
+.card h3 {
+  margin-top: 0.5rem;
+  color: #0ea5e9;
+}

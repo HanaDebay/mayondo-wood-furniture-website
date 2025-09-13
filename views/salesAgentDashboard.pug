@@ -1,0 +1,77 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    title MWF Sales Agent Dashboard
+    link(href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet")
+    link(href="../css/salesAgentDashboard.css" rel="stylesheet")
+
+  body
+    .sidebar
+      img.profile-img(src="../images/salesAgentProfile.jpg" alt="Sales Agent Photo")
+      h4#agentName Sales Agent Name
+      a(href="/sales-agent-dashboard") 📊 Dashboard
+      a(href="/recordSale") 💵 Record Sale
+      a(href="/viewStock") 📦 View Stock
+      a(href="/salesReport") 📈 My Sales Reports
+      hr
+      a(href="/index") 🏠 Home
+      hr
+      a.text-danger(href="/logout") 🚪 Logout
+
+    .content
+      h2.mb-4 📊 Sales Agent Dashboard
+
+      .row.mb-4
+        .col-md-3
+          .card.p-3
+            h6 Total Sales (Month)
+            h3#monthlySales $12,400
+        .col-md-3
+          .card.p-3
+            h6 Total Transactions
+            h3#totalTransactions 35
+        .col-md-3
+          .card.p-3
+            h6 Pending Orders
+            h3#pendingOrders 8
+        .col-md-3
+          .card.p-3
+            h6 Stock Assigned
+            h3#stockAssigned 120
+
+      .row
+        .col-md-12
+          .card.p-3
+            h6 Recent Transactions
+            table.table.table-sm.table-striped
+              thead
+                tr
+                  th Product
+                  th Quantity
+                  th Price
+                  th Date
+              tbody
+                tr
+                  td Office Desk
+                  td 2
+                  td $500
+                  td 2025-09-10
+                tr
+                  td Hardwood Plank
+                  td 10
+                  td $1,200
+                  td 2025-09-11
+                tr
+                  td Office Chair
+                  td 5
+                  td $750
+                  td 2025-09-11
+                tr
+                  td Softwood Poles
+                  td 15
+                  td $900
+                  td 2025-09-12
+
+    script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js")
