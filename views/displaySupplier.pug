@@ -1,0 +1,55 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    title Supplier List | MWF Ltd
+    link(href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet")
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    link(href="../css/supplierDisplay.css" rel="stylesheet")
+  body
+    .container.py-5
+      .d-flex.justify-content-between.align-items-center.mb-3
+        h2.mb-0 Supplier List
+        a.btn.btn-primary(href="/register-supplier") ➕ Add Supplier
+      .input-group.mb-3
+        input#searchInput.form-control(type="text" placeholder="Search suppliers...")
+
+      table.table.table-striped.table-bordered.align-middle.table-responsive
+        thead
+          tr
+            th Supplier Name
+            th Contact Person
+            th Email
+            th Phone
+            th Address
+            th Supply Category
+            th Notes
+            th Edit
+            th Delete
+        tbody#supplierTableBody
+          if suppliers && suppliers.length
+            each supplier in suppliers
+              tr
+                td= supplier.supplierName
+                td= supplier.contactPerson
+                td= supplier.email
+                td= supplier.phone
+                td= supplier.address
+                td= supplier.supplyCategory
+                td= supplier.notes || ""
+                td
+                  a.btn.btn-sm.btn-info(href=`/edit-supplier/${supplier._id}`) 
+                    i(class="bi bi-pencil-fill") 
+                    |  Edit
+                td
+                  form(action=`/delete-supplier/${supplier._id}?_method=DELETE` method="POST" style="display:inline")
+                    button.btn.btn-sm.btn-danger(type="submit" onclick="return confirm('Are you sure?')") 
+                      i(class="bi bi-trash-fill") 
+                      |  Delete
+          else
+            tr
+              td(colspan="9") No suppliers found.
+
+    script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js")
+    script(src="../js/supplierDisplay.js")

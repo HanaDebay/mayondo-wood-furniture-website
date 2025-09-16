@@ -3,39 +3,52 @@ html(lang="en")
   head
     meta(charset="UTF-8")
     meta(name="viewport" content="width=device-width, initial-scale=1.0")
-    title Display Users | MWF Ltd
+    title User Management | MWF Ltd
     link(rel="stylesheet" href="../css/usersDisplay.css")
+    link(rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css")
+    link(rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css")
   body
+    .container.py-5
+      .d-flex.justify-content-between.align-items-center.mb-3
+        h2.mb-0 User Management
+        a.btn.btn-primary(href="/register-user") ➕ Add User
+      .input-group.mb-3
+        input#searchInput.form-control(type="text" placeholder="Search users...")
 
-    main.container
-      h1 User Management
-      table.user-table
-        thead
-          tr
-            th # 
-            th Full Name
-            th Username
-            th Email
-            th Phone
-            th Role
-            th Status
-            th Actions
-        tbody
-          each user, index in users
+      .table-responsive
+        table.table.table-striped.table-bordered.align-middle
+          thead.header-row
             tr
-              td #{index + 1}
-              td #{user.fullName}
-              td #{user.username}
-              td #{user.email}
-              td #{user.phone}
-              td #{user.role}
-              td
-                if user.status == "Active"
-                  span.badge.active Active
-                else
-                  span.badge.inactive Inactive
-              td.actions
-                a.btn.edit(href=`/edit-user/${user._id}`) ✏️ Edit
-                form(action=`/delete-user/${user._id}?_method=DELETE` method="POST" style="display:inline")
-                  button.btn.delete(type="submit" onclick="return confirm('Are you sure?')") 🗑 Delete
-      script(src="../js/usersDisplay.js")
+              th #
+              th Full Name
+              th Username
+              th Email
+              th Phone
+              th Role
+              th Status
+              th Edit
+              th Delete
+          tbody#userTableBody
+            each user, index in users
+              tr
+                td #{index + 1}
+                td #{user.fullName}
+                td #{user.username}
+                td #{user.email}
+                td #{user.phone}
+                td #{user.role}
+                td
+                  if user.status == "Active"
+                    span.badge.active Active
+                  else
+                    span.badge.inactive Inactive
+                td
+                  a.btn.btn-sm.btn-info(href=`/edit-user/${user._id}`)
+                    i.bi.bi-pencil-fill
+                td
+                  form(action=`/delete-user/${user._id}?_method=DELETE` method="POST")
+                    button.btn.btn-sm.btn-danger(type="submit" onclick="return confirm('Are you sure?')")
+                      i.bi.bi-trash-fill
+
+    script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js")
+    script(src="../js/usersDisplay.js")

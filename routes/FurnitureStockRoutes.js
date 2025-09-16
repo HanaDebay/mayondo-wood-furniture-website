@@ -20,6 +20,15 @@ router.post("/registerFurniture", async (req, res) => {
   }
 });
 
+router.get("/view-furniure-stock", async (req, res) => {
+  try {
+    let furniture = await FurnitureStockModel.find();
+    res.render("furnitureStockDisplay", { furniture });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Server Error");
+  }
+});
 
 router.get("/view-furniure-stock", async (req, res) => {
   try {

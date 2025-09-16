@@ -5,6 +5,7 @@ const path = require("path");
 const passport = require("passport");
 const expressSession = require("express-session");
 const MongoStore = require("connect-mongo");
+const methodOverride = require("method-override");
 
 require("dotenv").config();
 
@@ -35,6 +36,7 @@ app.set('views',path.join(__dirname, 'views'));
 // 5. Middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(methodOverride("_method"));
 
 //EXPRESS-SESSIONS CONFIGS
 app.use(expressSession({

@@ -37,8 +37,12 @@ html(lang="en")
       .row.mb-4
         .col-md-3
           .card.p-3
-            h6 Total Stock
-            h3#totalStock 12,450
+            h3 Purchase Costs
+            p#purchasecost For Timber: #{new Intl.NumberFormat().format(totalExpenseTimber.totalCost)} Shs
+            p#purchasecost For Poles: #{new Intl.NumberFormat().format(totalExpensePoles.totalCost)} Shs
+            p#purchasecost For SoftWood: #{new Intl.NumberFormat().format(totalExpenseSoftWood.totalCost)} Shs
+            p#purchasecost For HardWood: #{new Intl.NumberFormat().format(totalExpenseHardWood.totalCost)} Shs
+            h5#purchasecost Total Expense: #{new Intl.NumberFormat().format((totalExpenseTimber.totalCost)+ (totalExpensePoles.totalCost)+ (totalExpenseSoftWood.totalCost)+ (totalExpenseHardWood.totalCost))} Shs
         .col-md-3
           .card.p-3
             h6 Total Sales (Month)

@@ -13,22 +13,14 @@ router.post("/registerWood", async (req, res) => {
     const woodStock = new WoodStockModel(req.body);
     console.log(req.body);
     await woodStock.save();
-    res.redirect("/managerDashboard");
+    res.redirect("/manager-dashboard");
   } catch (error) {
     console.error(error);
     res.redirect("/registerWood");
   }
 });
 
-router.get("/view-furniure-stock", async (req, res) => {
-  try {
-    let furniture = await FurnitureStockModel.find();
-    res.render("furnitureStockDisplay", { furniture });
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Server Error");
-  }
-});
+
 
 router.get("/view-wood-stock", async (req, res) => {
   try {
