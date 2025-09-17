@@ -16,8 +16,6 @@ html(lang="en")
           li
             a(href="/sales-agent-dashboard") Dashboard
           li
-            a(href="/record-sale") Record Sale
-          li
             a(href="/my-sales") My Sales
           li
             a(href="/view-stock") View Stock
@@ -30,7 +28,7 @@ html(lang="en")
       .row.justify-content-center
         .col-lg-8
           .card.shadow-lg.rounded-4
-            .card-header.bg-success.text-white.text-center.py-3.rounded-top-4
+            .card-header.bg-warning.text-white.text-center.py-3.rounded-top-4
               h3 Record Sale
             .card-body.p-4
               form#recordSaleForm(action="/record-sale" method="POST" autocomplete="on")
@@ -44,8 +42,8 @@ html(lang="en")
                   label.form-label Product Type
                   select#productType.form-select(name="productType" required)
                     option(value="" disabled selected) Select product type
-                    option(value="wood") Wood
-                    option(value="furniture") Furniture
+                    option(value="WoodStock") Wood
+                    option(value="FurnitureStock") Furniture
 
                 // Product Selection
                 .mb-3

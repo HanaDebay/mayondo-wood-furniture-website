@@ -17,8 +17,8 @@ productType.addEventListener("change", () => {
   const type = productType.value;
   let selectedStocks = [];
 
-  if (type === "wood") selectedStocks = woodStocks;
-  else if (type === "furniture") selectedStocks = furnitureStocks;
+  if (type === "WoodStock") selectedStocks = woodStocks;
+  else if (type === "FurnitureStock") selectedStocks = furnitureStocks;
 
   // Clear previous options
   productId.innerHTML = `<option value="" disabled selected>Select product</option>`;

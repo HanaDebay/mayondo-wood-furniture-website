@@ -1,0 +1,76 @@
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #028a5c 0%, #04b97f 30%, #064420 65%, #1b5e20 100%);
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 50px auto;
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+h2 {
+  color: #064420;
+  font-weight: 700;
+}
+
+.input-group {
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.table th, .table td {
+  white-space: nowrap;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.table-responsive {
+  overflow-x: auto;
+}
+
+.table th {
+  background-color: #064420;
+  color: #fff;
+  font-weight: bold;
+}
+
+.table tbody tr:nth-child(even) {
+  background: #f2f6fa;
+}
+
+.table tbody tr:hover {
+  background: #eaf5fc;
+}
+
+.btn {
+  border: none;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-info {
+  background: #3b82f6;
+  color: #fff;
+}
+
+.btn-info:hover {
+  background: #2563eb;
+}
+
+.btn-danger {
+  background: #ef4444;
+  color: #fff;
+}
+
+.btn-danger:hover {
+  background: #dc2626;
+}

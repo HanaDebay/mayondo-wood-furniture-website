@@ -1,0 +1,58 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    title All Sales | MWF Ltd
+    link(rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css")
+    link(rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css")
+    link(rel="stylesheet" href="../css/allSales.css")
+  body
+    // Main Content
+    .container.py-5
+      h2.text-center.mb-4 All Sales Records
+
+      .input-group.mb-3
+        input#searchInput.form-control(type="text" placeholder="Search sales by agent, customer, or product...")
+
+      .table-responsive
+        table.table.table-striped.table-bordered.align-middle
+          thead
+            tr
+              th #
+              th Product Name
+              th Product Type
+              th Quantity
+              th Unit Price (UGX)
+              th Total Cost (UGX)
+              th Customer
+              th Payment Method
+              th Transportation
+              th Date of Sale
+              th Sales Agent
+              th Edit
+              th Delete
+          tbody#salesTableBody
+            each sale, index in sales
+              tr
+                td #{index + 1}
+                td #{sale.productName}
+                td #{sale.productType}
+                td #{sale.quantity}
+                td #{sale.sellingPrice.toLocaleString()}
+                td #{sale.totalCost.toLocaleString()}
+                td #{sale.customerName}
+                td #{sale.paymentMethod}
+                td #{sale.transportation || 'N/A'}
+                td #{sale.dateOfSale.toDateString()}
+                td #{sale.salesAgent.username || sale.salesAgent.fullName}
+                td
+                  a.btn.btn-info.btn-sm(href=`/edit-sale/${sale._id}`)
+                    i.bi.bi-pencil-fill
+                td
+                  form(action=`/delete-sale/${sale._id}?_method=DELETE` method="POST")
+                    button.btn.btn-danger.btn-sm(type="submit" onclick="return confirm('Are you sure?')")
+                      i.bi.bi-trash-fill
+
+    script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js")
+    script(src="../js/allSales.js")

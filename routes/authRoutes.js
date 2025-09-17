@@ -64,15 +64,14 @@ router.post("/login", async (req, res) => {
 });
 
 router.get("/logout", (req, res) => {
-  if (req.session) {
-    req.session.destroy((error) => {
-      if (error) {
-        return res.status(500).send("Error Logging out");
-      }
-      res.redirect("/");
-    });
-  }
-  res.render("managerDashboard");
+  req.session.destroy((err) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send("Error logging out");
+    }
+    res.clearCookie("connect.sid"); // clear session cookie
+    res.redirect("/login"); // redirect to login page
+  });
 });
 
 
