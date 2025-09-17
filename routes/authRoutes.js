@@ -35,18 +35,33 @@ router.get("/login", (req, res) => {
   res.render("login"); 
 });
 
-router.post("/login", passport.authenticate("local", { failureRedirect: "/login" }),
-  (req, res) => {
-    req.session.user = req.user;
-    if (req.user.role === "Manager") {
-      res.redirect("/manager-dashboard");
-    } else if (req.user.role == "Sales-Agent") {
-      res.redirect("/salesAgentDashboard");
-    } else {
-      res.render("nonUser");
+router.post("/login", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.redirect("/login?error=Invalid credentials");
     }
+
+    // ✅ Store user and role in session
+    req.session.user = user;
+    req.session.role = user.role; // "Sales-Agent" or "Manager"
+
+    // Redirect based on role
+    if (user.role === "Manager") {
+      return res.redirect("/manager-dashboard");
+    } else if (user.role === "Sales-Agent") {
+      return res.redirect("/sales-agent-dashboard");
+    } else {
+      return res.redirect("/login");
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Login error");
   }
-);
+});
 
 router.get("/logout", (req, res) => {
   if (req.session) {

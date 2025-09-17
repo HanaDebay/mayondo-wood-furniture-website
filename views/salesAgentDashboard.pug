@@ -10,9 +10,9 @@ html(lang="en")
   body
     .sidebar
       img.profile-img(src="../images/salesAgentProfile.jpg" alt="Sales Agent Photo")
-      h4#agentName Sales Agent Name
+      h4#agentName= agent.fullName
       a(href="/sales-agent-dashboard") 📊 Dashboard
-      a(href="/recordSale") 💵 Record Sale
+      a(href="/record-sale") 💵 Record Sale
       a(href="/viewStock") 📦 View Stock
       a(href="/salesReport") 📈 My Sales Reports
       hr

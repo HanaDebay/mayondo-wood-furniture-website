@@ -1,25 +1,78 @@
-body {
-  background-color: #f7f7f8;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+/* Navbar */
+.navbar {
+  background-color: #0d6efd;
+  color: white;
+  padding: 0.5rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 0.5rem;
 }
 
+.navbar .brand a {
+  color: white;
+  font-weight: bold;
+  font-size: 1.5rem;
+  text-decoration: none;
+}
+
+.navbar .nav-links {
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar .nav-links li a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.navbar .nav-links li a:hover {
+  text-decoration: underline;
+}
+
+.nav-toggle {
+  display: none; /* optional for mobile toggle */
+}
+
+/* Card */
 .card {
-  border-radius: 16px;
+  background-color: #ffffff;
 }
 
+/* Card Header */
 .card-header {
-  border-top-left-radius: 16px !important;
-  border-top-right-radius: 16px !important;
+  font-size: 1.25rem;
 }
 
-footer {
-  font-size: 0.9rem;
+/* Footer */
+footer.site-footer {
+  background-color: #0d6efd;
+  color: white;
+  border-radius: 0.5rem;
 }
 
-.btn-info {
-  background-color: #0ea5e9;
-  border: none;
+/* Form controls */
+.form-control:read-only {
+  background-color: #e9ecef;
 }
-.btn-info:hover {
-  background-color: #0284c7;
+
+/* Responsive spacing */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .nav-toggle {
+    display: block;
+  }
 }

@@ -5,6 +5,7 @@ const router = express.Router();
 const User = require("../models/userModel");
 const WoodStock = require("../models/woodStockModel");
 
+
 // GET Routes
 router.get("/manager-dashboard", async (req, res) => {
   try {
@@ -74,12 +75,7 @@ router.get("/manager-dashboard", async (req, res) => {
       totalQuantity: 0,
       totalCost: 0,
     };
-    res.render("managerDashboard", {
-      totalExpenseTimber,
-      totalExpenseHardWood,
-      totalExpensePoles,
-      totalExpenseSoftWood
-    });
+    res.render("managerDashboard", {manager:req.user,totalExpenseTimber,totalExpenseHardWood,totalExpensePoles,totalExpenseSoftWood});
   } catch (error) {
     res.status(400).send("Unable to find the Items from the DB")
     console.error("Aggregation Error:", error.message)
@@ -87,7 +83,7 @@ router.get("/manager-dashboard", async (req, res) => {
 });
 
 router.get("/sales-agent-dashboard", (req, res) => {
-  res.render("salesAgentDashboard");
+  res.render("salesAgentDashboard",{agent: req.user});
 });
 
 router.get("/view-user", async (req, res) => {

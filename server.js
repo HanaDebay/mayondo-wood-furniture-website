@@ -16,6 +16,7 @@ const furnitureStockRoutes = require("./routes/FurnitureStockRoutes")
 const woodStockRoutes = require("./routes/woodStockRoutes")
 const userRoutes = require("./routes/userRoutes");
 const supplierRoutes = require("./routes/supplierRoutes");
+const salesRoutes = require("./routes/salesRoutes")
 
 // 3. Instantiations
 const app = express();
@@ -67,6 +68,7 @@ app.use("/", furnitureStockRoutes);
 app.use("/", woodStockRoutes);
 app.use("/", userRoutes);
 app.use("/", supplierRoutes);
+app.use("/", salesRoutes);
 
 
 // Server

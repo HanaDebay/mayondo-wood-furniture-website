@@ -1,48 +1,76 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const yearSpan = document.getElementById("year");
-  yearSpan.textContent = new Date().getFullYear();
+// Stocks passed from Pug
+const woodStocks = window.woodStocks || [];
+const furnitureStocks = window.furnitureStocks || [];
 
-  const stockType = document.getElementById("stockType");
-  const stockId = document.getElementById("stockId");
-  const priceInput = document.getElementById("price");
-  const quantityInput = document.getElementById("quantity");
-  const totalPriceInput = document.getElementById("totalPrice");
+// DOM Elements
+const productType = document.getElementById("productType");
+const productId = document.getElementById("productId");
+const availableStockInput = document.getElementById("availableStock");
+const unitPrice = document.getElementById("unitPrice");
+const quantity = document.getElementById("quantity");
+const transportation = document.getElementById("transportation");
+const totalCost = document.getElementById("totalCost");
+const form = document.getElementById("recordSaleForm");
 
-  // Load products dynamically based on stockType
-  stockType.addEventListener("change", async () => {
-    const type = stockType.value;
-    stockId.innerHTML = `<option value="" disabled selected>Loading...</option>`;
+// Populate products based on product type
+productType.addEventListener("change", () => {
+  const type = productType.value;
+  let selectedStocks = [];
 
-    try {
-      const response = await fetch(`/api/${type}Stocks`); // e.g. /api/woodStocks or /api/furnitureStocks
-      const products = await response.json();
+  if (type === "wood") selectedStocks = woodStocks;
+  else if (type === "furniture") selectedStocks = furnitureStocks;
 
-      stockId.innerHTML = `<option value="" disabled selected>Select a product</option>`;
-      products.forEach(item => {
-        const option = document.createElement("option");
-        option.value = item._id;
-        option.textContent = `${item.productName} (Qty: ${item.quantity})`;
-        option.dataset.price = item.sellingPrice;
-        stockId.appendChild(option);
-      });
-    } catch (err) {
-      stockId.innerHTML = `<option value="" disabled selected>Error loading products</option>`;
-    }
+  // Clear previous options
+  productId.innerHTML = `<option value="" disabled selected>Select product</option>`;
+
+  // Add options dynamically with available stock
+  selectedStocks.forEach(item => {
+    const option = document.createElement("option");
+    option.value = item._id;
+    option.text = `${item.productName} (Available: ${item.quantity})`;
+    option.setAttribute("data-price", item.sellingPrice);
+    option.setAttribute("data-available", item.quantity);
+    productId.appendChild(option);
   });
 
-  // Update price when product selected
-  stockId.addEventListener("change", () => {
-    const selectedOption = stockId.options[stockId.selectedIndex];
-    priceInput.value = selectedOption.dataset.price || "";
-    calculateTotal();
-  });
+  // Reset unit price, available stock, quantity, total cost
+  unitPrice.value = "";
+  availableStockInput.value = "";
+  quantity.value = "";
+  totalCost.value = "";
+});
 
-  // Update total price when quantity changes
-  quantityInput.addEventListener("input", calculateTotal);
+// Update unit price and available stock when a product is selected
+productId.addEventListener("change", () => {
+  const selectedOption = productId.selectedOptions[0];
+  unitPrice.value = selectedOption.getAttribute("data-price");
+  availableStockInput.value = selectedOption.getAttribute("data-available");
+  calculateTotal();
+});
 
-  function calculateTotal() {
-    const price = parseFloat(priceInput.value) || 0;
-    const qty = parseInt(quantityInput.value) || 0;
-    totalPriceInput.value = price * qty;
+// Calculate total cost
+function calculateTotal() {
+  const qty = parseFloat(quantity.value) || 0;
+  const price = parseFloat(unitPrice.value) || 0;
+  let total = qty * price;
+
+  if (transportation.checked) {
+    total += total * 0.05;
+  }
+
+  totalCost.value = total.toFixed(2);
+}
+
+// Recalculate total when quantity or transportation changes
+quantity.addEventListener("input", calculateTotal);
+transportation.addEventListener("change", calculateTotal);
+
+// Prevent selling more than available stock
+form.addEventListener("submit", (e) => {
+  const qty = parseFloat(quantity.value);
+  const available = parseFloat(availableStockInput.value);
+  if (qty > available) {
+    e.preventDefault();
+    alert("Quantity exceeds available stock!");
   }
 });
