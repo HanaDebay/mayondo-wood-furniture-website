@@ -104,6 +104,49 @@ console.log("Sales Fetched:", sales)
   }
 });
 
+router.get("/edit-sale/:id", ensureManager, async (req, res) => {
+  try {
+    const sale = await Sale.findById(req.params.id).populate("salesAgent", "fullName");
+    if (!sale) return res.redirect("/all-sales");
+    res.render("editSale", { sale });
+  } catch (err) {
+    console.error("Error loading sale for edit:", err);
+    res.redirect("/all-sales");
+  }
+});
+
+router.post("/edit-sale/:id", ensureManager, async (req, res) => {
+  try {
+    const { quantity, sellingPrice, customerName, paymentMethod, transportation } = req.body;
+
+    let sale = await Sale.findById(req.params.id);
+    if (!sale) return res.redirect("/all-sales");
+
+    sale.quantity = quantity;
+    sale.sellingPrice = sellingPrice;
+    sale.totalCost = quantity * sellingPrice;
+    sale.customerName = customerName;
+    sale.paymentMethod = paymentMethod;
+    sale.transportation = transportation;
+
+    await sale.save();
+    res.redirect("/all-sales");
+  } catch (err) {
+    console.error("Error updating sale:", err);
+    res.redirect("/all-sales");
+  }
+});
+
+router.delete("/delete-sale/:id", ensureAuthenticated, ensureManager, async (req, res) => {
+  try {
+    await Sale.findByIdAndDelete(req.params.id);
+    res.redirect("/all-sales");
+  } catch (err) {
+    console.error("Error deleting sale:", err);
+    res.status(500).send("Error deleting sale");
+  }
+});
+
 
 
 module.exports = router

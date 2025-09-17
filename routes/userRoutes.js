@@ -1,90 +1,171 @@
 // Dependencies
 const express = require("express");
 const router = express.Router();
+const mongoose = require("mongoose");
 
+const Sale = require("../models/salesModel");
 const User = require("../models/userModel");
 const WoodStock = require("../models/woodStockModel");
-
+const FurnitureStock = require("../models/furnitureStockModel");
+const {
+  ensureAuthenticated,
+  ensureManager,
+  ensureSalesAgent,
+} = require("../middleware/auth");
 
 // GET Routes
-router.get("/manager-dashboard", async (req, res) => {
-  try {
-    // expenses for buying wood-stock
-    let totalExpenseTimber = await WoodStock.aggregate([
-      { $match: { productType: "timber" } },
-      {
-        $group: {
-          _id: null,
-          totalQuantity: { $sum: "$quantity" },
-          // Cost price is unit price for each one item
-          totalCost: { $sum: { $multiply: ["$quantity", "$costPrice"] } },
+router.get(
+  "/manager-dashboard",
+  ensureAuthenticated,
+  ensureManager,
+  async (req, res) => {
+    try {
+      // expenses for buying wood-stock
+      let totalExpenseTimber = await WoodStock.aggregate([
+        { $match: { productType: "timber" } },
+        {
+          $group: {
+            _id: null,
+            totalQuantity: { $sum: "$quantity" },
+            // Cost price is unit price for each one item
+            totalCost: { $sum: { $multiply: ["$quantity", "$costPrice"] } },
+          },
         },
-      },
-    ]);
+      ]);
 
-    let totalExpensePoles = await WoodStock.aggregate([
-      { $match: { productType: "poles" } },
-      {
-        $group: {
-          _id: null,
-          totalQuantity: { $sum: "$quantity" },
-          // Cost price is unit price for each one item
-          totalCost: { $sum: { $multiply: ["$quantity", "$costPrice"] } },
+      let totalExpensePoles = await WoodStock.aggregate([
+        { $match: { productType: "poles" } },
+        {
+          $group: {
+            _id: null,
+            totalQuantity: { $sum: "$quantity" },
+            // Cost price is unit price for each one item
+            totalCost: { $sum: { $multiply: ["$quantity", "$costPrice"] } },
+          },
         },
-      },
-    ]);
+      ]);
 
-    let totalExpenseHardWood = await WoodStock.aggregate([
-      { $match: { productType: "hardwood" } },
-      {
-        $group: {
-          _id: null,
-          totalQuantity: { $sum: "$quantity" },
-          // Cost price is unit price for each one item
-          totalCost: { $sum: { $multiply: ["$quantity", "$costPrice"] } },
+      let totalExpenseHardWood = await WoodStock.aggregate([
+        { $match: { productType: "hardwood" } },
+        {
+          $group: {
+            _id: null,
+            totalQuantity: { $sum: "$quantity" },
+            // Cost price is unit price for each one item
+            totalCost: { $sum: { $multiply: ["$quantity", "$costPrice"] } },
+          },
         },
-      },
-    ]);
+      ]);
 
-    let totalExpenseSoftWood = await WoodStock.aggregate([
-      { $match: { productType: "softwood" } },
-      {
-        $group: {
-          _id: null,
-          totalQuantity: { $sum: "$quantity" },
-          // Cost price is unit price for each one item
-          totalCost: { $sum: { $multiply: ["$quantity", "$costPrice"] } },
+      let totalExpenseSoftWood = await WoodStock.aggregate([
+        { $match: { productType: "softwood" } },
+        {
+          $group: {
+            _id: null,
+            totalQuantity: { $sum: "$quantity" },
+            // Cost price is unit price for each one item
+            totalCost: { $sum: { $multiply: ["$quantity", "$costPrice"] } },
+          },
         },
-      },
-    ]);
-    // To avoid crusing the app if no expense have been added
-    // Set default values if no expenses in the DB
-    totalExpenseTimber = totalExpenseTimber[0] ?? {
-      totalQuantity: 0,
-      totalCost: 0,
-    };
-    totalExpensePoles = totalExpensePoles[0] ?? {
-      totalQuantity: 0,
-      totalCost: 0,
-    };
-    totalExpenseHardWood= totalExpenseHardWood[0] ?? {
-      totalQuantity: 0,
-      totalCost: 0,
-    };
-    totalExpenseSoftWood = totalExpenseSoftWood[0] ?? {
-      totalQuantity: 0,
-      totalCost: 0,
-    };
-    res.render("managerDashboard", {manager:req.session.user,totalExpenseTimber,totalExpenseHardWood,totalExpensePoles,totalExpenseSoftWood});
-  } catch (error) {
-    res.status(400).send("Unable to find the Items from the DB")
-    console.error("Aggregation Error:", error.message)
+      ]);
+      // To avoid crusing the app if no expense have been added
+      // Set default values if no expenses in the DB
+      totalExpenseTimber = totalExpenseTimber[0] ?? {
+        totalQuantity: 0,
+        totalCost: 0,
+      };
+      totalExpensePoles = totalExpensePoles[0] ?? {
+        totalQuantity: 0,
+        totalCost: 0,
+      };
+      totalExpenseHardWood = totalExpenseHardWood[0] ?? {
+        totalQuantity: 0,
+        totalCost: 0,
+      };
+      totalExpenseSoftWood = totalExpenseSoftWood[0] ?? {
+        totalQuantity: 0,
+        totalCost: 0,
+      };
+      res.render("managerDashboard", {
+        manager: req.session.user,
+        totalExpenseTimber,
+        totalExpenseHardWood,
+        totalExpensePoles,
+        totalExpenseSoftWood,
+      });
+    } catch (error) {
+      console.error("Aggregation Error:", error.message);
+      res.status(400).send("Unable to find the Items from the DB");
+    }
   }
-});
+);
 
-router.get("/sales-agent-dashboard", (req, res) => {
-  res.render("salesAgentDashboard",{agent: req.session.user});
-});
+router.get(
+  "/sales-agent-dashboard",
+  ensureAuthenticated,
+  ensureSalesAgent,
+  async (req, res) => {
+    try {
+      const agentId = req.session.user._id;
+
+      // First and last day of this month
+      const startOfMonth = new Date();
+      startOfMonth.setDate(1);
+      startOfMonth.setHours(0, 0, 0, 0);
+
+      const endOfMonth = new Date(startOfMonth);
+      endOfMonth.setMonth(endOfMonth.getMonth() + 1);
+      endOfMonth.setMilliseconds(-1);
+
+      const salesThisMonth = await Sale.find({
+        salesAgent: req.session.user._id,
+        dateOfSale: { $gte: startOfMonth, $lte: endOfMonth },
+      });
+      // Total sales this month
+      const monthlySalesAgg = await Sale.aggregate([
+        {
+          $match: {
+            salesAgent: new mongoose.Types.ObjectId(agentId),
+            dateOfSale: { $gte: startOfMonth, $lte: endOfMonth },
+          },
+        },
+        {
+          $group: {
+            _id: null,
+            total: { $sum: "$totalCost" },
+            count: { $sum: 1 },
+          },
+        },
+      ]);
+
+      const totalThisMonth = monthlySalesAgg[0]?.total || 0;
+      const totalTransactions = monthlySalesAgg[0]?.count || 0;
+
+      const monthlySalesByDay = {};
+      salesThisMonth.forEach((sale) => {
+        const day = sale.dateOfSale.getDate();
+        if (!monthlySalesByDay[day]) monthlySalesByDay[day] = 0;
+        monthlySalesByDay[day] += sale.totalCost;
+      });
+
+      // Recent transactions (last 5)
+      const recentTransactions = await Sale.find({ salesAgent: agentId })
+        .sort({ dateOfSale: -1 })
+        .limit(5);
+
+      res.render("salesAgentDashboard", {
+        agent: req.session.user,
+        totalThisMonth,
+        totalTransactions,
+        monthlySalesByDay,
+        recentTransactions,
+      });
+    } catch (err) {
+      console.error("Dashboard Error:", err);
+      res.status(500).send("Server Error");
+    }
+  }
+);
 
 router.get("/view-user", async (req, res) => {
   try {
@@ -125,5 +206,24 @@ router.delete("/delete-user/:id", async (req, res) => {
     res.status(500).json({ error: "Error deleting user" });
   }
 });
+
+router.get("/view-stock", ensureAuthenticated, ensureSalesAgent, async (req, res) => {
+  try {
+    const woodStocks = await WoodStock.find();
+    const furnitureStocks = await FurnitureStock.find();
+
+    // Combine stocks in one array
+    const stocks = [...woodStocks, ...furnitureStocks];
+
+    res.render("viewStock", { stocks });
+  } catch (err) {
+    console.error("Error loading stocks:", err.message);
+    res.status(500).send("Error loading stocks");
+  }
+});
+
+
+
+
 
 module.exports = router;
