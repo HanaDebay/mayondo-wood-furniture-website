@@ -153,7 +153,11 @@ router.get("/manager-dashboard", ensureAuthenticated, ensureManager, async (req,
   }
 });
 
-router.get("/sales-agent-dashboard", ensureAuthenticated, ensureSalesAgent,async (req, res) => {
+router.get(
+  "/sales-agent-dashboard",
+  ensureAuthenticated,
+  ensureSalesAgent,
+  async (req, res) => {
     try {
       const agentId = req.session.user._id;
 
@@ -271,6 +275,157 @@ router.get("/view-stock", ensureAuthenticated, ensureSalesAgent, async (req, res
   }
 });
 
+router.get("/manager-dashboard-data", ensureAuthenticated, ensureManager, async (req, res) => {
+  try {
+    // --- 1. Total sales this month ---
+    const startOfMonth = new Date();
+    startOfMonth.setDate(1);
+    startOfMonth.setHours(0, 0, 0, 0);
+
+    const endOfMonth = new Date(startOfMonth);
+    endOfMonth.setMonth(endOfMonth.getMonth() + 1);
+    endOfMonth.setMilliseconds(-1);
+
+    const monthlySalesAgg = await Sale.aggregate([
+      { $match: { dateOfSale: { $gte: startOfMonth, $lte: endOfMonth } } },
+      { $group: { _id: null, total: { $sum: "$totalCost" } } },
+    ]);
+    const totalSalesThisMonth = monthlySalesAgg[0]?.total || 0;
+
+    // --- 2. Sales per agent ---
+    const salesPerAgent = await Sale.aggregate([
+      {
+        $group: {
+          _id: "$salesAgent",
+          totalSales: { $sum: "$totalCost" },
+        },
+      },
+      {
+        $lookup: {
+          from: "users",
+          localField: "_id",
+          foreignField: "_id",
+          as: "agent",
+        },
+      },
+      {
+        $project: {
+          agentName: { $arrayElemAt: ["$agent.fullName", 0] },
+          totalSales: 1,
+        },
+      },
+    ]);
+
+    // --- 3. Product category breakdown ---
+    const categoryBreakdown = await Sale.aggregate([
+      {
+        $group: {
+          _id: "$productType",
+          totalSales: { $sum: "$totalCost" },
+        },
+      },
+    ]);
+
+    // --- 4. Monthly sales trend (last 6 months) ---
+    const sixMonthsAgo = new Date();
+    sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 5);
+
+    const monthlyTrend = await Sale.aggregate([
+      { $match: { dateOfSale: { $gte: sixMonthsAgo } } },
+      {
+        $group: {
+          _id: { year: { $year: "$dateOfSale" }, month: { $month: "$dateOfSale" } },
+          totalSales: { $sum: "$totalCost" },
+        },
+      },
+      { $sort: { "_id.year": 1, "_id.month": 1 } },
+    ]);
+
+    // --- 5. Attendants count ---
+    const attendantsCount = await User.countDocuments({ role: "SalesAgent" });
+
+    // --- 6. Suppliers count ---
+    const suppliersCount = await Supplier.countDocuments();
+
+    // Send JSON data back to frontend
+    res.json({
+      totalSalesThisMonth,
+      salesPerAgent,
+      categoryBreakdown,
+      monthlyTrend,
+      attendantsCount,
+      suppliersCount,
+    });
+  } catch (err) {
+    console.error("Manager Dashboard Data Error:", err.message);
+    res.status(500).json({ error: "Failed to load dashboard data" });
+  }
+});
+
 
 
 module.exports = router;
+
+
+async function loadManagerDashboard() {
+  try {
+    const response = await fetch("/manager-dashboard-data");
+    const data = await response.json();
+
+    // Top cards
+    document.querySelector("#totalSales").textContent = new Intl.NumberFormat().format(data.totalSalesThisMonth);
+    document.querySelector("#attendants").textContent = data.attendantsCount;
+    document.querySelector("#suppliers").textContent = data.suppliersCount;
+
+    // Bar Chart (Sales per Agent)
+    const barCtx = document.querySelector("#barChart").getContext("2d");
+    const barChart = new Chart(barCtx, {
+      type: "bar",
+      data: {
+        labels: data.salesPerAgent.map(a => a.agentName),
+        datasets: [{
+          label: "Sales per Agent",
+          data: data.salesPerAgent.map(a => a.totalSales),
+          backgroundColor: "#3b82f6"
+        }]
+      },
+      options: { responsive: true }
+    });
+
+    // Pie Chart (Product Category Breakdown)
+    const pieCtx = document.querySelector("#pieChart").getContext("2d");
+    const pieChart = new Chart(pieCtx, {
+      type: "pie",
+      data: {
+        labels: data.categoryBreakdown.map(c => c._id),
+        datasets: [{
+          data: data.categoryBreakdown.map(c => c.totalSales),
+          backgroundColor: ["#3b82f6", "#f59e0b"]
+        }]
+      },
+      options: { responsive: true }
+    });
+
+    // Line Chart (Monthly Sales Trend)
+    const lineCtx = document.querySelector("#lineChart").getContext("2d");
+    const lineChart = new Chart(lineCtx, {
+      type: "line",
+      data: {
+        labels: data.monthlyTrend.map(m => `${m._id.month}/${m._id.year}`),
+        datasets: [{
+          label: "Monthly Sales",
+          data: data.monthlyTrend.map(m => m.totalSales),
+          borderColor: "#10b981",
+          fill: false,
+        }]
+      },
+      options: { responsive: true }
+    });
+
+  } catch (err) {
+    console.error("Error loading dashboard:", err);
+  }
+}
+
+// Call the function when the page loads
+loadManagerDashboard();

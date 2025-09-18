@@ -17,7 +17,9 @@ const woodStockRoutes = require("./routes/woodStockRoutes")
 const userRoutes = require("./routes/userRoutes");
 const supplierRoutes = require("./routes/supplierRoutes");
 const salesRoutes = require("./routes/salesRoutes")
-
+const countRoutes = require("./routes/aggregation/count");
+const purchaseCostRoutes = require("./routes/aggregation/purchaseCosts");
+const managerDashboardChartRoutes = require("./routes/aggregation/managerDashboardCharts");
 // 3. Instantiations
 const app = express();
 
@@ -69,6 +71,9 @@ app.use("/", woodStockRoutes);
 app.use("/", userRoutes);
 app.use("/", supplierRoutes);
 app.use("/", salesRoutes);
+app.use("/", countRoutes);
+app.use("/", purchaseCostRoutes);
+app.use("/", managerDashboardChartRoutes);
 
 
 // Server

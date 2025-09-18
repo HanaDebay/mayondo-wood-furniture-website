@@ -29,3 +29,9 @@ body { display: flex; min-height: 100vh; }
     .content { flex-grow: 1; padding: 20px; background: #f8f9fa; }
     .card { box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
     hr { border-color: rgba(255,255,255,0.2); }
+    .card.card-bg-color{
+      background-color: rgba(250, 249, 250, 1);
+    }
+    .card.card-bg-color-two{
+      background-color: rgb(237, 240, 239);
+    }
