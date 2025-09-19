@@ -27,6 +27,7 @@ router.get("/view-supplier", async (req, res) => {
     res.status(500).send("Server Error");
   }
 });
+
 router.get("/edit-supplier/:id", async(req , res) => {
   try {
     let supplier = await Supplier.findById(req.params.id);

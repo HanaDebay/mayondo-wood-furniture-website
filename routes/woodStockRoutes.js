@@ -20,8 +20,6 @@ router.post("/registerWood", async (req, res) => {
   }
 });
 
-
-
 router.get("/view-wood-stock", async (req, res) => {
   try {
     let wood = await WoodStockModel.find();

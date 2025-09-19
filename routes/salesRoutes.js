@@ -1,7 +1,9 @@
 const express = require("express");
+const PDFDocument = require("pdfkit");
 const router = express.Router();
 const { ensureAuthenticated, ensureSalesAgent, ensureManager } = require("../middleware/auth")
 const Sale = require("../models/salesModel");
+const User = require("../models/userModel");
 const WoodStock = require("../models/woodStockModel");
 const FurnitureStock = require("../models/furnitureStockModel");
 
@@ -24,8 +26,7 @@ router.get("/record-sale", ensureAuthenticated, ensureSalesAgent, async (req, re
   }
 });
 
-
-// 🟢 POST: Save Sale Record (Sales Agent only)
+// POST: Save Sale Record (Sales Agent only)
 router.post("/record-sale", ensureAuthenticated, ensureSalesAgent, async (req, res) => {
   try {
     const { productId, productType, quantity, paymentMethod, customerName, transportation, dateOfSale } = req.body;
@@ -78,7 +79,7 @@ router.post("/record-sale", ensureAuthenticated, ensureSalesAgent, async (req, r
   }
 });
 
-// 🟢 GET: My Sales (Agent can only see their sales)
+// GET: My Sales (Agent can only see their sales)
 router.get("/my-sales", ensureAuthenticated, ensureSalesAgent, async (req, res) => {
   try {
     const sales = await Sale.find({ salesAgent: req.session.user._id });
@@ -89,8 +90,7 @@ router.get("/my-sales", ensureAuthenticated, ensureSalesAgent, async (req, res) 
   }
 });
 
-
-// 🟢 GET: All Sales (Manager only)
+// GET: All Sales (Manager only)
 router.get("/all-sales", ensureAuthenticated, ensureManager, async (req, res) => {
   try {
     const sales = await Sale.find()
@@ -146,6 +146,55 @@ router.delete("/delete-sale/:id", ensureAuthenticated, ensureManager, async (req
     res.status(500).send("Error deleting sale");
   }
 });
+
+router.get("/receipt/:id", ensureAuthenticated, async (req, res) => {
+  try {
+    const sale = await Sale.findById(req.params.id).populate("salesAgent", "fullName");
+
+    if (!sale) {
+      return res.status(404).send("Sale not found");
+    }
+
+    // Role-based check
+    if (req.user.role === "Sales-Agent" && sale.salesAgent._id.toString() !== req.user._id.toString()) {
+      return res.status(403).send("Not authorized to view this receipt");
+    }
+
+    // Generate PDF
+    const doc = new PDFDocument();
+    res.setHeader("Content-Type", "application/pdf");
+    res.setHeader("Content-Disposition", `attachment; filename=receipt-${sale._id}.pdf`);
+    doc.pipe(res);
+
+    // Company info
+    doc.fontSize(18).text("Mayondo Wood & Furniture Ltd", { align: "center" });
+    doc.fontSize(12).text("Official Sales Receipt", { align: "center" });
+    doc.moveDown();
+
+    // Receipt details
+    doc.text(`Receipt ID: ${sale._id}`);
+    doc.text(`Date: ${new Date(sale.dateOfSale).toLocaleDateString()}`);
+    doc.text(`Sales Agent: ${sale.salesAgent.fullName}`);
+    doc.text(`Customer: ${sale.customerName}`);
+    doc.text(`Payment Method: ${sale.paymentMethod}`);
+    doc.moveDown();
+
+    // Products
+    doc.text("Products:", { underline: true });
+    doc.text(`${sale.productName} x${sale.quantity} @ UGX ${sale.sellingPrice.toLocaleString()}`);
+    doc.moveDown();
+
+    // Total
+    doc.fontSize(14).text(`TOTAL: UGX ${sale.totalCost.toLocaleString()}`, { align: "right" });
+
+    doc.end();
+  } catch (err) {
+    console.error("Error generating receipt:", err);
+    res.status(500).send("Server error");
+  }
+});
+
+
 
 
 

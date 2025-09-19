@@ -13,7 +13,7 @@ router.post("/registerFurniture", async (req, res) => {
     const furnitureStock = new FurnitureStockModel(req.body);
     console.log(req.body);
     await furnitureStock.save();
-    res.redirect("/managerDashboard");
+    res.redirect("/manager-dashboard");
   } catch (error) {
     console.error(error);
     res.redirect("/registerFurniture");
@@ -39,7 +39,6 @@ router.get("/view-furniure-stock", async (req, res) => {
     res.status(500).send("Server Error");
   }
 });
-
 
 router.get("/editFurniture/:id", async (req, res) => {
   try {

@@ -160,7 +160,8 @@ if (barCtx) {
       new Chart(lineCtx, {
         type: "line",
         data: {
-          labels: data.monthlySalesData.map(m =>m._id),
+          labels: data.monthlySalesData.map(m => `${new Date(m._id.year, m._id.month - 1).toLocaleString("default", { month: "short" })} ${m._id.year}`
+      ),
           datasets: [{
             label: "Monthly Sales",
             data: data.monthlySalesData.map(m => m.totalSales),

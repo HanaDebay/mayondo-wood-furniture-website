@@ -78,7 +78,9 @@ router.get("/manager-dashboard-chart", ensureAuthenticated, ensureManager, async
     const monthlySalesData = await Sale.aggregate([
       {
         $group: {
-          _id: { month: { $month: "$dateOfSale" }, year: { $year: "$dateOfSale" } },
+          _id: { 
+            month: { $month: "$dateOfSale" }, 
+            year: { $year: "$dateOfSale" } },
           totalSales: { $sum: "$totalCost" }
         }
       },
@@ -89,29 +91,31 @@ router.get("/manager-dashboard-chart", ensureAuthenticated, ensureManager, async
  const salesPerAgent = await Sale.aggregate([
   {
     $lookup: {
-      from: "users",            
-      localField: "agent",
-      foreignField: "_id",
+      from: "users",               
+      localField: "salesAgent",    
+      foreignField: "_id",         
       as: "agentInfo"
     }
   },
-  { $unwind: "$agentInfo" },
+  { $unwind: "$agentInfo" },       
   {
     $group: {
-      _id: "$agentInfo.fullName", 
-      totalSales: { $sum: "$total" }
+      _id: "$agentInfo.fullName",  
+      totalSales: { $sum: "$totalCost" } 
     }
-  }
+  },
+  { $sort: { totalSales: -1 } }    
 ]);
+
 
 
     // 🔹 Category breakdown
     const categoryBreakdown = await Sale.aggregate([
-      { $unwind: "$items" },
+    
       {
         $group: {
-          _id: "$items.category",
-          totalSales: { $sum: "$items.price" }
+          _id: "$productType",
+          totalSales: { $sum: "$totalCost" }
         }
       }
     ]);
