@@ -25,10 +25,7 @@ const app = express();
 
 // 4. Configuration
 // Settingup MongoDB connection
-mongoose.connect(process.env.DATABASE, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-}).then(() => console.log("MongoDB connected"))
+mongoose.connect(process.env.DATABASE).then(() => console.log("MongoDB connected"))
   .catch(err => console.error("MongoDB error:", err));
 
 
@@ -62,6 +59,7 @@ passport.deserializeUser(User.deserializeUser());
 
 // Static files
 app.use(express.static(path.join(__dirname, "public")));
+app.use("/uploads", express.static("uploads"))
 
 // 6. Routes
 //  using imported routes
@@ -74,7 +72,10 @@ app.use("/", salesRoutes);
 app.use("/", countRoutes);
 app.use("/", purchaseCostRoutes);
 app.use("/", managerDashboardChartRoutes);
-
+app.use((req, res, next) => {
+  res.locals.currentUser = req.user;
+  next();
+});
 
 // Server
 const PORT = process.env.PORT || 3000;

@@ -10,7 +10,6 @@ const saltRounds = 10; //A salt is random data added to the password before hash
 router.get("/register-user", (req, res) => {
   res.render("userSignup"); // Pug file name
 });
-
 // POST Routes
 router.post("/register-user", async (req, res) => {
   try {
@@ -29,7 +28,6 @@ router.post("/register-user", async (req, res) => {
     res.status(500).send("Server error. Please try again.");
   }
 });
-
 // Show Login Form
 router.get("/login", (req, res) => {
   res.render("login"); 

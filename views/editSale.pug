@@ -14,7 +14,7 @@ html(lang="en")
             .card-header.bg-primary.text-white.text-center.py-3.rounded-top-4
               h3 Edit Sale
             .card-body.p-4
-              form#editSaleForm(action=`/edit-sale/${sale._id}` method="POST" autocomplete="on")
+              form#editSaleForm(action=`/edit-sale/${sale._id}`  method="POST" autocomplete="on")
                 // Sales Agent
                 .mb-3
                   label.form-label Sales Agent
@@ -67,9 +67,9 @@ html(lang="en")
                   label.form-label Payment Method
                   select.form-select(name="paymentMethod" required)
                     option(value="" disabled) Select payment method
-                    option(value="cash" selected=(sale.paymentMethod === "cash")) Cash
-                    option(value="bank" selected=(sale.paymentMethod === "bank")) Bank Transfer
-                    option(value="mobile" selected=(sale.paymentMethod === "mobile")) Mobile Money
+                    option(value="Cash" selected=(sale.paymentMethod === "Cash")) Cash
+                    option(value="Bank-Transfer" selected=(sale.paymentMethod === "Bank-Transfer")) Bank Transfer
+                    option(value="Mobile-Money" selected=(sale.paymentMethod === "Mobile-Money")) Mobile Money
 
                 // Sale Date
                 .mb-3

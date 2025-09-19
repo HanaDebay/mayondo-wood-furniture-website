@@ -119,7 +119,7 @@ router.post("/edit-sale/:id", ensureManager, async (req, res) => {
   try {
     const { quantity, sellingPrice, customerName, paymentMethod, transportation } = req.body;
 
-    let sale = await Sale.findById(req.params.id);
+    let sale = await Sale.findByIdAndUpdate(req.params.id, req.body);
     if (!sale) return res.redirect("/all-sales");
 
     sale.quantity = quantity;

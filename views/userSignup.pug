@@ -70,7 +70,9 @@ html(lang="en")
                 label(for="confirmPassword") Confirm Password
                   span *
                 input#confirmPassword(type="password" name="confirmPassword" minlength="6" required)
-
+              .field 
+                label(for='profileImage') Upload Profile Image
+                input#profileImage(type='file' name='profileImage' accept='image/*')
             .actions
               button.btn.primary(type="submit") Create Account
               button.btn.ghost(type="reset") Clear

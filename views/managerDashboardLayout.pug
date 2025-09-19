@@ -1,0 +1,38 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    title MWF Manager Dashboard
+    link(href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet")
+    link(href="../css/dashboard.css" rel="stylesheet")
+
+  body
+    .sidebar
+      if currentUser 
+        if currentUser.profileImage 
+          img.profile-img(src=`/uploads/${currentUser.profileImage}` alt="Profile Photo")
+        else
+          img.profile-img(src="/images/defaultProfile.jpg" alt="Default Profile Photo")
+        h4#managerName= currentUser.fullName
+      else 
+        img.profile-img(src="/images/defaultProfile.jpg" alt="Default")
+        h4#managerName Guest
+      h4#managerName= manager.fullName
+      a(href="/manager-dashboard") 📊 Dashboard
+      a(href="/register-user") 👨‍💼 Register Sales-Agent
+      a(href="/register-supplier") 🏭 Register Supplier
+      a(href="/registerFurniture") 🛋️ Add Furniture Stock
+      a(href="/registerWood") 🪵 Add Wood Stock
+      a(href="/all-sales") 💰 Generate Sales Reports
+      a(href="/view-user") 🧑‍💼 View Users
+      a(href="#viewStockSubmenu" class="d-block text-decoration-none" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="viewStockSubmenu") 📄 View Stock
+      div.collapse.ms-3#viewStockSubmenu
+        a(href="/view-wood-stock" class="d-block text-decoration-none mt-1") 🪵 Wood Stock
+        a(href="/view-furniure-stock" class="d-block text-decoration-none mt-1") 🛋️ Furniture Stock
+
+      hr
+      a(href="/index") 🏠 Home
+      hr
+      a.text-danger(href="/logout") 🚪 Logout
+  block content 
