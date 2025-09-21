@@ -36,11 +36,10 @@ const signupSchema = new mongoose.Schema(
     },
     status: { 
       type: String, 
-      enum: ["Active", "Left"], default: "Active" } 
-    // password: {
-    //   type: String,
-    //   required: true,
-    // },
+      enum: ["Active", "Left"], default: "Active" },
+    profileImage: {
+      type: String,
+    },
   },
   
   { timestamps: true }

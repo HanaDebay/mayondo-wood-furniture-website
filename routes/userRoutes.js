@@ -133,7 +133,7 @@ router.get("/manager-dashboard", ensureAuthenticated, ensureManager, async (req,
       { $sort: { "_id.year": 1, "_id.month": 1 } }
     ]);
 
-    res.render("managerDashboard", {
+    res.render("managerDashboardContent", {
       manager: req.session.user,
       totalExpenseTimber,
       totalExpensePoles,

@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Supplier = require("../models/supplierModel");
+const User = require("../models/userModel");
 
 router.get("/register-supplier", (req, res) => {
   res.render("registerSupplier");

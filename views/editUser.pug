@@ -1,37 +1,10 @@
-doctype html
-html(lang="en")
-  head
-    meta(charset="UTF-8")
-    meta(name="viewport" content="width=device-width, initial-scale=1.0")
-    title Edit User | MWF Ltd
-    link(rel="stylesheet" href="../css/signup.css")
-  body
-    nav.navbar
-      .navbar-container
-        .brand
-          a(href="/") MWF
-          button.nav-toggle(type="button" aria-label="Toggle navigation") ☰
-        ul.nav-links
-          li
-            a(href="/manager-dashboard") Dashboard
-          li
-            a(href="/registerWood") Register Wood Stock
-          li
-            a(href="/registerFurniture") Register Furniture Stock
-          li
-            a(href="/display-users") View Users
-          li
-            a.text-danger(href="/logout") Logout 
-
-    header.site-header
-      h1 Mayondo Wood & Furniture (MWF) Ltd
-      p.subtitle Edit User Information
-
+extends managerDashboardLayout
+block content
     main.container
       section.tab-panel.active
         .form-wrapper
           form.card(action=`/edit-user/${user._id}` method="POST" autocomplete="on" novalidate)
-            h2 Edit User
+            h2.text-center Edit User Information
             .grid
               .field
                 label(for="fullName") Full Name
@@ -71,11 +44,3 @@ html(lang="en")
             .actions
               button.btn.primary(type="submit") Update User
               a.btn.ghost(href="/displayUsers") Cancel
-
-          .form-image
-            img(src="../images/signupSideImg.jpg" alt="Edit User")
-
-    footer.site-footer
-      small © 
-        span#year
-        |  MWF Ltd • All rights reserved.

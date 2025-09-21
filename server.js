@@ -7,6 +7,7 @@ const expressSession = require("express-session");
 const MongoStore = require("connect-mongo");
 const methodOverride = require("method-override");
 
+
 require("dotenv").config();
 
 const User = require("./models/userModel")
@@ -59,10 +60,26 @@ passport.deserializeUser(User.deserializeUser());
 
 // Static files
 app.use(express.static(path.join(__dirname, "public")));
-app.use("/uploads", express.static("uploads"))
+app.use("public/uploads", express.static(path.join(__dirname,"public/uploads")));
 
 // 6. Routes
 //  using imported routes
+
+app.use(async (req, res, next) => {
+  if (req.session.userId) {
+    try {
+      const user = await User.findById(req.session.userId).lean();
+      res.locals.user = user; 
+    } catch (err) {
+      console.error(err);
+      res.locals.user = null;
+    }
+  } else {
+    res.locals.user = null;
+  }
+  next();
+});
+
 app.use("/", authRoutes);
 app.use("/", furnitureStockRoutes);
 app.use("/", woodStockRoutes);
@@ -72,10 +89,7 @@ app.use("/", salesRoutes);
 app.use("/", countRoutes);
 app.use("/", purchaseCostRoutes);
 app.use("/", managerDashboardChartRoutes);
-app.use((req, res, next) => {
-  res.locals.currentUser = req.user;
-  next();
-});
+
 
 // Server
 const PORT = process.env.PORT || 3000;

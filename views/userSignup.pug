@@ -1,36 +1,9 @@
-doctype html
-html(lang="en")
-  head
-    meta(charset="UTF-8")
-    meta(name="viewport" content="width=device-width, initial-scale=1.0")
-    title MWF | Register User
-    link(rel="stylesheet" href="../css/signup.css")
-  body
-    nav.navbar
-      .navbar-container
-        .brand
-          a(href="/") MWF
-          button.nav-toggle(type="button" aria-label="Toggle navigation") ☰
-        ul.nav-links
-          li
-            a(href="/manager-dashboard") Dashboard
-          li
-            a(href="/registerWood") Register Wood Stock
-          li
-            a(href="/registerFurniture") Register Furniture Stock
-          li
-            a(href="/register-supplier") Register Supplier
-          li
-            a(href="/logout") Logout 
-
-    header.site-header
-      h1 Mayondo Wood & Furniture (MWF) Ltd
-      p.subtitle Register Manager / Sales Agent
-
+extends managerDashboardLayout
+block content
     main.container
       section.tab-panel.active
         .form-wrapper
-          form.card#signupForm(action="/register-user" method="POST" autocomplete="on" novalidate)
+          form.card#signupForm(action="/register-user" method="POST" autocomplete="on" novalidate enctype="multipart/form-data")
             h2 Register User
             .grid
               .field
@@ -70,22 +43,11 @@ html(lang="en")
                 label(for="confirmPassword") Confirm Password
                   span *
                 input#confirmPassword(type="password" name="confirmPassword" minlength="6" required)
-              .field 
-                label(for='profileImage') Upload Profile Image
-                input#profileImage(type='file' name='profileImage' accept='image/*')
             .actions
               button.btn.primary(type="submit") Create Account
               button.btn.ghost(type="reset") Clear
 
             p.hint By submitting, you agree that all provided information is accurate.
-
-          .form-image
-            img(src="../images/signupSideImg.jpg" alt="User Registration")
-
-    footer.site-footer
-      small © 
-        span#year
-        |  MWF Ltd • All rights reserved.
 
     //- script(src="../js/signup.js")
     

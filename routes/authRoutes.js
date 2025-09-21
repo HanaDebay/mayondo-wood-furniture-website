@@ -1,17 +1,31 @@
 // Dependencies
 const express = require("express");
+const path = require("path");
 const router = express.Router();
 const User = require("../models/userModel");
+const multer = require("multer");
+
 const passport = require("passport");
 const bcrypt = require("bcrypt"); //bcrypt is a library for hashing passwords securely.
 const saltRounds = 10; //A salt is random data added to the password before hashing.
 
+let storage = multer.diskStorage({
+  destination: (req , file , cb) => {
+    cb(null, "public/uploads")
+  },
+   filename: (req , file , cb) => {
+    cb(null, Date.now() + path.extname(file.originalname));
+  }
+})
+
+const upload = multer({storage})
+
 // GET Routes
 router.get("/register-user", (req, res) => {
-  res.render("userSignup"); // Pug file name
+  res.render("userSignup", { manager: req.session.user }); // Pug file name
 });
 // POST Routes
-router.post("/register-user", async (req, res) => {
+router.post("/register-user", upload.single("profileImage"), async (req, res) => {
   try {
     const { fullName, email, phone, username, password, role } = req.body;
     // Check if email or username already exists
@@ -19,10 +33,18 @@ router.post("/register-user", async (req, res) => {
     if (existingUser) {
       return res.status(400).send("Email or username already in use");
     }
-    const user = new User({ fullName, email, phone, username, role });
+
+    const user = new User({ 
+      fullName: req.body.fullName, 
+      email: req.body.email, 
+      phone: req.body.phone, 
+      username: req.body.username, 
+      role: req.body.role, 
+      profileImage: req.file ? req.file.filename : null,
+    });
+    
     await User.register(user, password);
-    console.log("User registered:", user);
-    res.redirect("/login"); 
+    res.redirect("/manager-dashboard")
   } catch (error) {
     console.error("Error saving user:", error.message);
     res.status(500).send("Server error. Please try again.");
