@@ -48,12 +48,20 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
-// JS for toggler
-document.addEventListener("DOMContentLoaded", () => {
-  const toggle = document.querySelector(".nav-toggle");
-  const links = document.querySelector(".nav-links");
-  toggle.addEventListener("click", () => {
-    links.classList.toggle("active");
+
+
+  const sidebar = document.querySelector(".sidebar");
+  const toggleIcon = document.getElementById("sidebarToggle");
+
+  // Restore saved state from localStorage
+  if (localStorage.getItem("sidebar-collapsed") === "true") {
+    sidebar.classList.add("collapsed");
+  }
+
+  toggleIcon.addEventListener("click", () => {
+    sidebar.classList.toggle("collapsed");
+
+    // Save state so it's remembered after refresh
+    localStorage.setItem("sidebar-collapsed", sidebar.classList.contains("collapsed"));
   });
-});
 

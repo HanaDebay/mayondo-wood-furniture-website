@@ -1,68 +1,19 @@
-// async function loadManagerDashboard() {
-//   try {
-//     const response = await fetch("/manager-dashboard-chart");
-//     const data = await response.json();
+  const sidebar = document.querySelector(".sidebar");
+  const toggleIcon = document.getElementById("sidebarToggle");
 
-//     // Top cards
-//     document.querySelector("#attendants").textContent = data.attendantsCount;
+  // Restore saved state from localStorage
+  if (localStorage.getItem("sidebar-collapsed") === "true") {
+    sidebar.classList.add("collapsed");
+  }
 
-//     // Top Customers
-//     const topCustomersUl = document.querySelector("#topCustomers");
-//     topCustomersUl.innerHTML = "";
-//     data.topCustomers.forEach(c => {
-//       const li = document.createElement("li");
-//       li.className = "list-group-item";
-//       li.textContent = `${c._id} - UGX ${c.totalSpent.toLocaleString()}`;
-//       topCustomersUl.appendChild(li);
-//     });
+  toggleIcon.addEventListener("click", () => {
+    sidebar.classList.toggle("collapsed");
 
-//     // Attendant Activity Log
-//     const activityTbody = document.querySelector("table tbody");
-//     activityTbody.innerHTML = "";
-//     data.activityLog.forEach(log => {
-//       const tr = document.createElement("tr");
-//       tr.innerHTML = `
-//         <td>${log.salesAgent.fullName}</td>
-//         <td>Recorded Sale of ${log.productName} x${log.quantity}</td>
-//         <td>${new Date(log.dateOfSale).toLocaleDateString()}</td>
-//       `;
-//       activityTbody.appendChild(tr);
-//     });
+    // Save state so it's remembered after refresh
+    localStorage.setItem("sidebar-collapsed", sidebar.classList.contains("collapsed"));
+  });
 
-//     // Charts (same as before)
-//     const barCtx = document.querySelector("#barChart").getContext("2d");
-//     new Chart(barCtx, {
-//       type: "bar",
-//       data: {
-//         labels: data.salesPerAgent.map(a => a.agentName),
-//         datasets: [{ label: "Sales per Agent", data: data.salesPerAgent.map(a => a.totalSales), backgroundColor: "#3b82f6" }]
-//       }
-//     });
-
-//     const pieCtx = document.querySelector("#pieChart").getContext("2d");
-//     new Chart(pieCtx, {
-//       type: "pie",
-//       data: {
-//         labels: data.categoryBreakdown.map(c => c._id),
-//         datasets: [{ data: data.categoryBreakdown.map(c => c.totalSales), backgroundColor: ["#3b82f6", "#f59e0b"] }]
-//       }
-//     });
-
-//     const lineCtx = document.querySelector("#lineChart").getContext("2d");
-//     new Chart(lineCtx, {
-//       type: "line",
-//       data: {
-//         labels: data.monthlySalesData.map(m => `${m._id.month}/${m._id.year}`),
-//         datasets: [{ label: "Monthly Sales", data: data.monthlySalesData.map(m => m.totalSales), borderColor: "#10b981", fill: false }]
-//       }
-//     });
-
-//   } catch (err) {
-//     console.error("Error loading dashboard:", err);
-//   }
-// }
-
-// loadManagerDashboard();
+  
 async function loadPurchaseCosts() {
   const woodResp = await fetch("/totalWoodCost");
   const woodData = await woodResp.json();

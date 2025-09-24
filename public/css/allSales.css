@@ -1,54 +1,70 @@
-body {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, #028a5c 0%, #04b97f 30%, #064420 65%, #1b5e20 100%);
-  margin: 0;
-  padding: 0;
-}
 
+/* Container and heading */
 .container {
   max-width: 1300px;
   margin: 50px auto;
   background: #fff;
   padding: 20px;
   border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-left: 250px;
 }
 
 h2 {
   color: #064420;
   font-weight: 700;
+  text-align: center;
+  margin-bottom: 30px;
 }
 
-.input-group {
+/* Search input */
+#searchInput {
+  width: 80%;
+  margin-bottom: 20px;
+    margin-left: 100px;
+}
+
+/* Table styling */
+.table-responsive {
+  overflow-x: auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.table {
   width: 100%;
-  margin-bottom: 15px;
+  border-collapse: separate;
+  border-spacing: 0;
 }
 
-.table th, .table td {
+.table th,
+.table td {
   white-space: nowrap;
   text-align: center;
   vertical-align: middle;
+  padding: 8px 12px;
 }
-
-.table-responsive {
-  overflow-x: auto;
+.table td{
+  text-align: left;
 }
 
 .table th {
-  background-color: #064420;
+  background-color: #2c3e50;
   color: #fff;
   font-weight: bold;
 }
 
 .table tbody tr:nth-child(even) {
-  background: #f2f6fa;
+  background-color: #f2f6fa;
 }
 
 .table tbody tr:hover {
-  background: #eaf5fc;
+  background-color: #eaf5fc;
+  transition: 0.2s ease-in-out;
 }
 
-.btn {
+/* Buttons inside table */
+.table .btn {
   border: none;
   padding: 4px 10px;
   border-radius: 6px;
@@ -57,29 +73,29 @@ h2 {
   transition: 0.3s;
 }
 
-.btn-info {
+.table .btn-info {
   background: #3b82f6;
   color: #fff;
 }
 
-.btn-info:hover {
+.table .btn-info:hover {
   background: #2563eb;
 }
 
-.btn-danger {
+.table .btn-danger {
   background: #ef4444;
   color: #fff;
 }
 
-.btn-danger:hover {
+.table .btn-danger:hover {
   background: #dc2626;
 }
 
-.btn-success {
+.table .btn-success {
   background: #10b981;
   color: #fff;
 }
 
-.btn-success:hover {
+.table .btn-success:hover {
   background: #059669;
 }

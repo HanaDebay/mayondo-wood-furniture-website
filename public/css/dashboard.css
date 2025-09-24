@@ -4,20 +4,22 @@ body {
 }
 .sidebar {
   width: 250px;
-  background: #2c3e50;
-  color: white;
-  flex-shrink: 0;
-  padding: 20px;
+  height: 100vh; /* full viewport height */
+  background: #1f2937;
+  color: #fff;
+  transition: width 0.3s ease;
+  overflow: hidden;
+  position: fixed;
+  left: 0;
+  top: 0;
   display: flex;
   flex-direction: column;
+  overflow-y: auto;
 }
-.sidebar h4 {
-  margin-bottom: 10px;
-  text-align: center;
-}
+
 .sidebar .profile-img {
-  width: 80px;
-  height: 80px;
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
   object-fit: cover;
   margin: 0 auto 10px;
@@ -34,20 +36,66 @@ body {
 .sidebar a:hover {
   background: #34495e;
 }
+
 .content {
   flex-grow: 1;
   padding: 20px;
   background: #f8f9fa;
+  margin-left: 250px;
+  transition: margin-left 0.3s ease;
 }
-.card {
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+
+/* Collapsed sidebar */
+.sidebar.collapsed {
+  width: 80px; /* show logo + icons */
 }
-hr {
-  border-color: rgba(255, 255, 255, 0.2);
+
+/* Sidebar header */
+.sidebar-header {
+  padding: 15px;
+  position: relative;
+  flex-shrink: 0;
+
 }
-.card.card-bg-color {
-  background-color: rgba(250, 249, 250, 1);
+
+#sidebarToggle {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  cursor: pointer;
+  color: #fff;
 }
-.card.card-bg-color-two {
-  background-color: rgb(237, 240, 239);
+
+.sidebar-links{
+  flex: 1;
+overflow-y: auto;
+}
+/* Links */
+.sidebar-links a {
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
+  color: #fff;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.sidebar-links a:hover {
+  background: #c9c6c6ff;
+}
+
+.sidebar-links .icon {
+  width: 30px;
+  text-align: center;
+  font-size: 18px;
+}
+
+/* Hide text in collapsed mode */
+.sidebar.collapsed .text {
+  display: none;
+}
+
+.sidebar-links::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
 }

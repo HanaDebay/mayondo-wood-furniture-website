@@ -12,3 +12,19 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+
+
+const sidebar = document.querySelector(".sidebar");
+  const toggleIcon = document.getElementById("sidebarToggle");
+
+  // Restore saved state from localStorage
+  if (localStorage.getItem("sidebar-collapsed") === "true") {
+    sidebar.classList.add("collapsed");
+  }
+
+  toggleIcon.addEventListener("click", () => {
+    sidebar.classList.toggle("collapsed");
+
+    // Save state so it's remembered after refresh
+    localStorage.setItem("sidebar-collapsed", sidebar.classList.contains("collapsed"));
+  });
