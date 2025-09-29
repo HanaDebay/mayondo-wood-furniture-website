@@ -7,6 +7,7 @@ const multer = require("multer");
 
 const passport = require("passport");
 const bcrypt = require("bcrypt"); //bcrypt is a library for hashing passwords securely.
+const { error } = require("console");
 const saltRounds = 10; //A salt is random data added to the password before hashing.
 
 let storage = multer.diskStorage({
@@ -24,7 +25,7 @@ const upload = multer({storage})
 router.get("/register-user", (req, res) => {
   res.render("userSignup", { manager: req.session.user }); // Pug file name
 });
-// POST Routes
+
 router.post("/register-user", upload.single("profileImage"), async (req, res) => {
   try {
     const { fullName, email, phone, username, password, role } = req.body;

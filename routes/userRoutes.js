@@ -132,6 +132,27 @@ router.get("/manager-dashboard", ensureAuthenticated, ensureManager, async (req,
       },
       { $sort: { "_id.year": 1, "_id.month": 1 } }
     ]);
+    
+    // Total Sales
+    const totalSales = await Sale.aggregate([
+      { $group: { _id: null, total: { $sum: "$totalCost" } } }
+    ]);
+    const totalPurchaseWood = await WoodStock.aggregate([
+      { $group: { _id: null, total: { $sum: "$costPrice" } } }
+    ]);
+    const totalPurchaseFurniture = await FurnitureStock.aggregate([
+      { $group: { _id: null, total: { $sum: "$costPrice" } } }
+    ]);
+
+    const sales = totalSales[0]?.total || 0;
+    const purchase = (totalPurchaseWood[0]?.total || 0) +
+                     (totalPurchaseFurniture[0]?.total || 0);
+
+    console.log("Total Sales:", sales);
+    console.log("Total Purchase:", purchase);
+    console.log("Revenue:", sales - purchase);
+    
+
 
     res.render("managerDashboardContent", {
       manager: req.session.user,
@@ -144,7 +165,10 @@ router.get("/manager-dashboard", ensureAuthenticated, ensureManager, async (req,
       suppliersCount,
       salesPerAttendant,
       categoryBreakdown,
-      salesTrend
+      salesTrend,
+      revenue: sales - purchase, 
+      sales, 
+      purchase 
     });
 
   } catch (error) {

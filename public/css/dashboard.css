@@ -1,20 +1,26 @@
 body {
   display: flex;
-  min-height: 100vh;
+  margin: 0;
+  font-family: Arial, sans-serif;
 }
+
+/* Sidebar style */
 .sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 250px;
-  height: 100vh; /* full viewport height */
+  height: 100vh;
   background: #1f2937;
   color: #fff;
-  transition: width 0.3s ease;
-  overflow: hidden;
-  position: fixed;
-  left: 0;
-  top: 0;
-  display: flex;
-  flex-direction: column;
   overflow-y: auto;
+  z-index: 1000;
+  flex-direction: column;
+  transition: all 0.3s ease;
+}
+
+.sidebar.collapsed {
+  width: 80px;
 }
 
 .sidebar .profile-img {
@@ -22,80 +28,79 @@ body {
   height: 70px;
   border-radius: 50%;
   object-fit: cover;
-  margin: 0 auto 10px;
-  display: block;
+  margin: 20px auto;
 }
+
+.sidebar h4 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
 .sidebar a {
-  display: block;
-  padding: 10px;
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
   color: white;
   text-decoration: none;
   margin: 5px 0;
   border-radius: 5px;
+  font-size: 14px;
 }
+
 .sidebar a:hover {
   background: #34495e;
 }
 
+/* Content style */
 .content {
   flex-grow: 1;
   padding: 20px;
-  background: #f8f9fa;
-  margin-left: 250px;
+  background-color: #ebeef1ff;
+  margin-left: 250px; /* sidebar width */
   transition: margin-left 0.3s ease;
 }
 
-/* Collapsed sidebar */
-.sidebar.collapsed {
-  width: 80px; /* show logo + icons */
+/* Adjust when sidebar collapsed */
+.sidebar.collapsed + .content {
+  margin-left: 80px;
 }
 
-/* Sidebar header */
-.sidebar-header {
-  padding: 15px;
-  position: relative;
-  flex-shrink: 0;
-
+/* Container limit for professional look */
+.content .container {
+  max-width: 1400px;
 }
 
-#sidebarToggle {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  cursor: pointer;
-  color: #fff;
-}
-
-.sidebar-links{
-  flex: 1;
-overflow-y: auto;
-}
-/* Links */
-.sidebar-links a {
+/* Responsive cards layout */
+.row.g-3 > [class*="col-"] {
   display: flex;
+  flex-direction: column;
+}
+
+/* Card styling */
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  padding: 10px 15px;
-  color: #fff;
-  text-decoration: none;
-  transition: background 0.2s;
+  border-radius: 12px;
+  padding: 15px;
 }
 
-.sidebar-links a:hover {
-  background: #c9c6c6ff;
+/* Sidebar responsiveness */
+@media (max-width: 992px) {
+  .sidebar {
+    position: relative;
+    width: 100%;
+    height: auto;
+  }
+  .content {
+    margin-left: 0; /* remove margin so cards are fully visible */
+  }
 }
 
-.sidebar-links .icon {
-  width: 30px;
-  text-align: center;
-  font-size: 18px;
-}
-
-/* Hide text in collapsed mode */
-.sidebar.collapsed .text {
-  display: none;
-}
-
-.sidebar-links::-webkit-scrollbar-thumb {
-  background-color: rgba(255, 255, 255, 0.3);
-  border-radius: 3px;
+/* Small screen fix for cards */
+@media (max-width: 576px) {
+  .row.g-3 {
+    gap: 1rem;
+  }
 }

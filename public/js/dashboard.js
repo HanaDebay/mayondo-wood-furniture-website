@@ -13,19 +13,6 @@
     localStorage.setItem("sidebar-collapsed", sidebar.classList.contains("collapsed"));
   });
 
-  
-async function loadPurchaseCosts() {
-  const woodResp = await fetch("/totalWoodCost");
-  const woodData = await woodResp.json();
-  document.querySelector("#woodCost").textContent = woodData.totalWoodCost.toLocaleString() + " UGX";
-
-  const furnitureResp = await fetch("/totalFurnitureCost");
-  const furnitureData = await furnitureResp.json();
-  document.querySelector("#furnitureCost").textContent = furnitureData.totalFurnitureCost.toLocaleString() + " UGX";
-
-  const total = woodData.totalWoodCost + furnitureData.totalFurnitureCost;
-  document.querySelector("#totalPurchase").textContent = total.toLocaleString() + " UGX";
-}
 
 async function loadCounts() {
   const resp = await fetch("/count");
@@ -128,7 +115,76 @@ if (barCtx) {
   }
 }
 
+// async function loadPurchaseCosts() {
+//   const woodResp = await fetch("/totalWoodCost");
+//   const woodData = await woodResp.json();
+//   document.querySelector("#woodCost").textContent = woodData.totalWoodCost.toLocaleString() + " UGX";
 
+//   const furnitureResp = await fetch("/totalFurnitureCost");
+//   const furnitureData = await furnitureResp.json();
+//   document.querySelector("#furnitureCost").textContent = furnitureData.totalFurnitureCost.toLocaleString() + " UGX";
+
+//   const total = woodData.totalWoodCost + furnitureData.totalFurnitureCost;
+//   document.querySelector("#totalPurchase").textContent = total.toLocaleString() + " UGX";
+// }
+
+// document.addEventListener("DOMContentLoaded", async () => {
+//   try {
+//     // Fetch Revenue + Sales + Purchase
+//     const revenueRes = await fetch("/manager-dashboard");
+//     const revenueData = await revenueRes.json();
+
+//     document.getElementById("totalSales").textContent =
+//       new Intl.NumberFormat().format(revenueData.totalSales) + " UGX";
+//     document.getElementById("totalPurchase").textContentext =
+//       new Intl.NumberFormat().format(revenueData.totalPurchase) + " UGX";
+//     document.getElementById("revenue").textContentt =
+//       new Intl.NumberFormat().format(revenueData.revenue) + " UGX";
+
+//     // Fetch Low Stock
+//     const stockRes = await fetch("/manager-dashboard");
+//     const stockData = await stockRes.json();
+
+//     const lowStockList = document.getElementById("lowStockList");
+//     lowStockList.innerHTML = ""; // Clear default text
+//     if (stockData.length === 0) {
+//       lowStockList.innerHTML = "<li>No low stock items ✅</li>";
+//     } else {
+//       stockData.forEach(item => {
+//         const li = document.createElement("li");
+//         li.innerText = `${item.productName} (${item.quantity} left)`;
+//         lowStockList.appendChild(li);
+//       });
+//     }
+//   } catch (err) {
+//     console.error("Error loading dashboard data:", err);
+//   }
+// });
+
+  async function fetchTotalPurchase() {
+        try {
+          const response = await fetch('/totalPurchase');
+          const data = await response.json();
+          document.getElementById('totalPurchase').textContent = `${data.totalPurchase.toLocaleString()} UGX` ;
+        } catch (error) {
+          console.error(error);
+          document.getElementById('totalPurchase').textContent = "Error fetching data";
+        }
+      }
+
+  async function fetchProfitMargin() {
+  try {
+    const res = await fetch("/profitMargin"); // API we built earlier
+    const data = await res.json();
+    document.getElementById("profitMargin").textContent = `${data.profitMargin}%`;
+  } catch (error) {
+    console.error(error);
+    document.getElementById("profitMargin").textContent = "Error";
+  }
+}
+
+fetchProfitMargin();     
+fetchTotalPurchase();
 loadManagerDashboard();
-loadPurchaseCosts();
+// loadPurchaseCosts();
 loadCounts();

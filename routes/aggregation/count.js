@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const User = require("../../models/userModel");
 const Supplier = require("../../models/supplierModel");
+
 const { ensureAuthenticated, ensureManager } = require("../../middleware/auth");
 
 router.get("/count", ensureAuthenticated, ensureManager, async (req, res) => {
@@ -14,6 +15,10 @@ router.get("/count", ensureAuthenticated, ensureManager, async (req, res) => {
     console.error("Count error:", err);
     res.status(500).json({ error: "Server error" });
   }
+});
+
+router.get("/revenu", ensureAuthenticated, ensureManager, async(req, res) => {
+
 });
 
 module.exports = router;

@@ -1,71 +1,97 @@
 extends managerDashboardLayout
 
 block content
-  h2.mb-4 📊 Manager Dashboard
-  h2 Welcome back #{managerName= manager.fullName} !
-      .row.mb-4
-        .col-md-3           
-          .card.p-3.card-bg-color-two
-            h5 Purchase Costs
-            h6 Wood Stock
-            p 
-              | Wood Stock: 
-              span#woodCost 0 UGX
-            h6 Furniture Stock
-            p 
-              | Furniture Stock: 
-              span#furnitureCost 0 UGX
-            h5 Total Purchase
-            p 
-              | Total: 
-              span#totalPurchase 0 UGX
-        .col-md-3
-          .card.p-3
-            .card.p-3
-              h6 Total Sales (Month)
-              h4#totalSales #{new Intl.NumberFormat().format(totalSalesThisMonth)} UGX
-        .col-md-3
-          .card.p-3
-            h6 Attendants
-            h3#attendants #{attendantsCount}
-        .col-md-3
-          .card.p-3
-            h6 Suppliers
-            h3#suppliers #{suppliersCount}
+  .container.bg-light.p-3
+    h2.text-center.mb-2 📊 Manager Dashboard
+    h4.text-center.mb-4 Welcome back #{manager.fullName}!
 
-      // Charts
-      .row.mb-4
-        .col-md-6
-          .card.p-3
-            h5.card-title Sales per Agent
-            canvas#barChart(width="400" height="200")
-        .col-md-6
-          .card.p-3
-            h5.card-title Category Breakdown
-            canvas#pieChart(width="400" height="200")
+    // KPI Cards — responsive
+    .row.g-3.mb-4
+      .col-12.col-md-6.col-lg-3
+        .card.p-3.text-center.bg-light.border-0.shadow-sm
+          i.fas.fa-shopping-cart.text-success.fa-2x.mb-2
+          h6 Wood and Furniture
+          h6 Total Purchase
+          span#totalPurchase
 
-      // Sales Trend
-      .row.mb-4
-        .col-md-12
-          .card.p-3
-            h5.card-title Monthly Sales
-            canvas#lineChart(width="400" height="200")
+      .col-12.col-md-6.col-lg-3
+        .card.p-3.text-center.bg-light.border-0.shadow-sm
+          i.fas.fa-money-bill-wave.fa-2x.text-success.mb-2
+          h6 Total Sales
+          h4#totalSales #{new Intl.NumberFormat().format(totalSalesThisMonth)} UGX
 
-      // Top Customers & Attendant Activity
-      .row
-        .col-md-6.mb-4
-          .card
-            .card-body
-              h5.card-title Top Customers
-              ul.list-group#topCustomers
-                li.list-group-item Loading...
+      .col-12.col-md-6.col-lg-3
+        .card.p-3.text-center.bg-light.border-0.shadow-sm
+          i.fas.fa-users.fa-2x.text-warning.mb-2
+          h6 Revenue
+          span#revenue 0 UGX
 
+      .col-12.col-md-6.col-lg-3
+        .card.p-3.text-center.bg-light.border-0.shadow-sm
+          i.fas.fa-boxes.fa-2x.text-danger.mb-2
+          h6 Low Stock
+          ul#lowStockList
+            li Loading...
 
-        .col-md-12.mb-4
-          .card
-            .card-body
-              h5.card-title Attendant Activity Log
-              table.table.table-striped
+    // Row 2 KPI Cards
+    .row.g-3.mb-4
+      .col-12.col-md-6.col-lg-3
+        .card.p-3.text-center.bg-light.border-0.shadow-sm
+          i.fas.fa-percent.text-primary.fa-2x.mb-2
+          h6 Profit Margin
+          h6 Current Report
+          span#profitMargin 0%
+
+      .col-12.col-md-6.col-lg-3
+        .card.p-3.text-center.bg-light.border-0.shadow-sm
+          i.fas.fa-users.fa-2x.text-warning.mb-2
+          h6 Sales Agents
+          h4#totalAgents #{attendantsCount}
+
+      .col-12.col-md-6.col-lg-3
+        .card.p-3.text-center.bg-light.border-0.shadow-sm
+          i.fas.fa-boxes.fa-2x.text-danger.mb-2
+          h6 Stock Items
+          h4#totalStock 120
+
+      .col-12.col-md-6.col-lg-3
+        .card.p-3.text-center.bg-light.border-0.shadow-sm
+          i.fas.fa-money-bill-wave.fa-2x.text-success.mb-2
+          h6 Total Sales
+          h4#totalSales #{new Intl.NumberFormat().format(totalSalesThisMonth)} UGX
+
+    // Charts
+    .row.g-3.mb-4
+      .col-12.col-lg-6
+        .card.p-3
+          h5.card-title Sales per Agent
+          canvas#barChart(width="400" height="200")
+
+      .col-12.col-lg-6
+        .card.p-3
+          h5.card-title Category Breakdown
+          canvas#pieChart(width="400" height="200")
+
+      .col-12.col-lg-6
+        .card.p-3
+          h5.card-title Monthly Sales
+          canvas#lineChart(width="400" height="200")
+
+    // Top Customers & Activity Log
+    .row.g-3.mb-4
+      .col-12.col-lg-6
+        .card.h-100.d-flex.flex-column
+          .card-body.d-flex.flex-column
+            h5.card-title Top Customers
+            ul.list-group.flex-grow-1.overflow-auto#topCustomers
+              li.list-group-item Loading...
+
+      .col-12.col-lg-6
+        .card.h-100.d-flex.flex-column
+          .card-body.d-flex.flex-column
+            h5.card-title Attendant Activity Log
+            .table-responsive.flex-grow-1.overflow-auto
+              table.table.table-striped.mb-0
                 thead
                   tr
                     th Agent
@@ -75,8 +101,7 @@ block content
                   tr
                     td(colspan="3") Loading...
 
-
-        script(src="https://cdn.jsdelivr.net/npm/chart.js")
-        script(src="../js/dashboard.js")
-        script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js")
-
+    // Scripts
+    script(src="https://cdn.jsdelivr.net/npm/chart.js")
+    script(src="../js/dashboard.js")
+    script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js")

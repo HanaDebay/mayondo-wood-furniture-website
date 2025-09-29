@@ -1,4 +1,3 @@
-// userRoutes.js (or manager routes)
 const express = require("express");
 const router = express.Router();
 const Sale = require("../../models/salesModel");
