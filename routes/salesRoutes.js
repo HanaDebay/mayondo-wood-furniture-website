@@ -147,55 +147,68 @@ router.delete("/delete-sale/:id", ensureAuthenticated, ensureManager, async (req
   }
 });
 
-router.get("/receipt/:id", ensureAuthenticated, async (req, res) => {
-  try {
-    const sale = await Sale.findById(req.params.id).populate("salesAgent", "fullName");
+// router.get("/receipt/:id", ensureAuthenticated, async (req, res) => {
+//   try {
+//     const sale = await Sale.findById(req.params.id).populate("salesAgent", "fullName");
 
-    if (!sale) {
+//     if (!sale) {
+//       return res.status(404).send("Sale not found");
+//     }
+
+//     // Role-based check
+//     if (req.user.role === "Sales-Agent" && sale.salesAgent._id.toString() !== req.user._id.toString()) {
+//       return res.status(403).send("Not authorized to view this receipt");
+//     }
+
+//     // Generate PDF
+//     const doc = new PDFDocument();
+//     res.setHeader("Content-Type", "application/pdf");
+//     res.setHeader("Content-Disposition", `attachment; filename=receipt-${sale._id}.pdf`);
+//     doc.pipe(res);
+
+//     // Company info
+//     doc.fontSize(18).text("Mayondo Wood & Furniture Ltd", { align: "center" });
+//     doc.fontSize(12).text("Official Sales Receipt", { align: "center" });
+//     doc.moveDown();
+
+//     // Receipt details
+//     doc.text(`Receipt ID: ${sale._id}`);
+//     doc.text(`Date: ${new Date(sale.dateOfSale).toLocaleDateString()}`);
+//     doc.text(`Sales Agent: ${sale.salesAgent.fullName}`);
+//     doc.text(`Customer: ${sale.customerName}`);
+//     doc.text(`Payment Method: ${sale.paymentMethod}`);
+//     doc.moveDown();
+
+//     // Products
+//     doc.text("Products:", { underline: true });
+//     doc.text(`${sale.productName} x${sale.quantity} @ UGX ${sale.sellingPrice.toLocaleString()}`);
+//     doc.moveDown();
+
+//     // Total
+//     doc.fontSize(14).text(`TOTAL: UGX ${sale.totalCost.toLocaleString()}`, { align: "right" });
+
+//     doc.end();
+//   } catch (err) {
+//     console.error("Error generating receipt:", err);
+//     res.status(500).send("Server error");
+//   }
+// });
+
+router.get("/get-receipt/:id",  async (req, res) => {
+  try {
+    const sale = await Sale.findOne({_id: req.params.id})
+      .populate("salesAgent", "username fullName")
+      .populate("productId");
+console.log("Sales Fetched:", sale)
+    if(!sale){
       return res.status(404).send("Sale not found");
     }
-
-    // Role-based check
-    if (req.user.role === "Sales-Agent" && sale.salesAgent._id.toString() !== req.user._id.toString()) {
-      return res.status(403).send("Not authorized to view this receipt");
-    }
-
-    // Generate PDF
-    const doc = new PDFDocument();
-    res.setHeader("Content-Type", "application/pdf");
-    res.setHeader("Content-Disposition", `attachment; filename=receipt-${sale._id}.pdf`);
-    doc.pipe(res);
-
-    // Company info
-    doc.fontSize(18).text("Mayondo Wood & Furniture Ltd", { align: "center" });
-    doc.fontSize(12).text("Official Sales Receipt", { align: "center" });
-    doc.moveDown();
-
-    // Receipt details
-    doc.text(`Receipt ID: ${sale._id}`);
-    doc.text(`Date: ${new Date(sale.dateOfSale).toLocaleDateString()}`);
-    doc.text(`Sales Agent: ${sale.salesAgent.fullName}`);
-    doc.text(`Customer: ${sale.customerName}`);
-    doc.text(`Payment Method: ${sale.paymentMethod}`);
-    doc.moveDown();
-
-    // Products
-    doc.text("Products:", { underline: true });
-    doc.text(`${sale.productName} x${sale.quantity} @ UGX ${sale.sellingPrice.toLocaleString()}`);
-    doc.moveDown();
-
-    // Total
-    doc.fontSize(14).text(`TOTAL: UGX ${sale.totalCost.toLocaleString()}`, { align: "right" });
-
-    doc.end();
+    res.render("receipt", {receipt: sale});
   } catch (err) {
-    console.error("Error generating receipt:", err);
-    res.status(500).send("Server error");
+    console.error("Error fetching all sales:", err);
+    res.status(400).send("Unable to find a sale");
   }
 });
-
-
-
 
 
 module.exports = router

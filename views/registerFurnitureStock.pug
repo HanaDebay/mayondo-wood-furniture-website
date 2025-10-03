@@ -9,7 +9,7 @@ block content
             .card-body.p-4
               form(action="/registerFurniture" method="POST" autocomplete="on" novalidate)
                 .mb-3
-                  label.form-label(for="productName") Product Name 
+                  label.form-label.wide-lable(for="productName") Product Name 
                     span.text-danger *
                   input#productName.form-control(type="text" name="productName" placeholder="e.g., Office Desk" required)
 
