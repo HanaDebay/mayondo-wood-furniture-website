@@ -16,7 +16,7 @@ body, html {
 /* Left side */
 .split-left {
   flex: 2;
-  background: url("/images/wood-bg.jpg") no-repeat center center/cover; /* background image */
+  background: url("../images/wood-bg.jpg") no-repeat center center/cover; /* background image */
   position: relative;
   color: #fff;
 }
