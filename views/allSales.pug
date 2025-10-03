@@ -11,9 +11,14 @@ block content
               th #
               th Sales Agent
               th Product
+              th Type
+              th Unit-Price
               th Quantity
+              th Transportation
               th Total Cost
               th Date of Sale
+              th Customer-Name
+              th Payment-Method
               th Edit
               th Delete
               th Print Receipt
@@ -23,9 +28,14 @@ block content
                 td.text-center #{index + 1}
                 td #{sale.salesAgent ? (sale.salesAgent.fullName || sale.salesAgent.username) : 'Unknown Agent'}
                 td #{sale.productName}
+                td #{sale.productType}
+                td #{sale.sellingPrice}
                 td.text-end #{sale.quantity}
+                td #{sale.transportation}
                 td.text-end #{sale.totalCost}
                 td.text-center #{sale.dateOfSale.toISOString().substring(0,10)}
+                td #{sale.customerName}
+                td #{sale.paymentMethod}
                 td.text-center
                   a.btn.btn-sm.btn-info(href=`/edit-sale/${sale._id}` title="Edit")
                     i.bi.bi-pencil-fill Edit

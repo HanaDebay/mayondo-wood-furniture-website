@@ -79,7 +79,9 @@ app.use(async (req, res, next) => {
   }
   next();
 });
-
+app.get("/", (req, res) => {
+  res.render("landingPage");
+});
 app.use("/", authRoutes);
 app.use("/", furnitureStockRoutes);
 app.use("/", woodStockRoutes);

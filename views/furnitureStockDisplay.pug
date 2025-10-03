@@ -11,6 +11,7 @@ block content
         table.table.table-striped.table-bordered.align-middle
           thead.custom-header
             tr
+              th #
               th Product Name
               th Type
               th Cost Price (UGX)
@@ -25,8 +26,9 @@ block content
               th Delete
           tbody#furnitureTableBody
             if furniture && furniture.length
-              each item in furniture
+              each item, index in furniture
                 tr
+                  td #{index + 1}
                   td= item.productName
                   td= item.productType
                   td= item.costPrice
