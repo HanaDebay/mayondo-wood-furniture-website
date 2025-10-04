@@ -38,7 +38,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (res.ok) {
         alert("User registered successfully as " + role);
-        window.location.href = "/login";
+        setTimeout(() => {
+          window.location.href = "/manager-dashboard";
+        }, 1000); //
       } else {
         alert("Error: " + data.error);
       }
@@ -49,19 +51,20 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+const sidebar = document.querySelector(".sidebar");
+const toggleIcon = document.getElementById("sidebarToggle");
 
-  const sidebar = document.querySelector(".sidebar");
-  const toggleIcon = document.getElementById("sidebarToggle");
+// Restore saved state from localStorage
+if (localStorage.getItem("sidebar-collapsed") === "true") {
+  sidebar.classList.add("collapsed");
+}
 
-  // Restore saved state from localStorage
-  if (localStorage.getItem("sidebar-collapsed") === "true") {
-    sidebar.classList.add("collapsed");
-  }
+toggleIcon.addEventListener("click", () => {
+  sidebar.classList.toggle("collapsed");
 
-  toggleIcon.addEventListener("click", () => {
-    sidebar.classList.toggle("collapsed");
-
-    // Save state so it's remembered after refresh
-    localStorage.setItem("sidebar-collapsed", sidebar.classList.contains("collapsed"));
-  });
-
+  // Save state so it's remembered after refresh
+  localStorage.setItem(
+    "sidebar-collapsed",
+    sidebar.classList.contains("collapsed")
+  );
+});

@@ -45,7 +45,8 @@ router.post("/register-user", upload.single("profileImage"), async (req, res) =>
     });
     
     await User.register(user, password);
-    res.redirect("/manager-dashboard")
+    res.status(200).json({ message: "User registered successfully", role });
+    // res.redirect("/manager-dashboard")
   } catch (error) {
     console.error("Error saving user:", error.message);
     res.status(500).send("Server error. Please try again.");
