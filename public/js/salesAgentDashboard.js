@@ -1,10 +1,19 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const ctx = document.getElementById("monthlySalesChart").getContext("2d");
+  const canvas = document.getElementById("monthlySalesChart");
+
+  // ✅ Destroy existing chart if it exists
+  const existingChart = Chart.getChart(canvas);
+  if (existingChart) {
+    existingChart.destroy();
+  }
+
+  const ctx = canvas.getContext("2d");
 
   // Prepare labels and data
   const days = Object.keys(monthlySalesData).map(day => `Day ${day}`);
   const totals = Object.values(monthlySalesData);
 
+  // Create new chart safely
   new Chart(ctx, {
     type: "bar",
     data: {
@@ -25,3 +34,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+
+
+

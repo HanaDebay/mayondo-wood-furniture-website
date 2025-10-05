@@ -226,7 +226,7 @@ router.get("/sales-agent-dashboard", ensureAuthenticated, ensureSalesAgent,async
         .sort({ dateOfSale: -1 })
         .limit(5);
 
-      res.render("salesAgentDashboard", {
+      res.render("salesAgentDashboardContent", {
         agent: req.session.user,
         totalThisMonth,
         totalTransactions,

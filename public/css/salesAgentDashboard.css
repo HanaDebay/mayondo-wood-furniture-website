@@ -1,4 +1,4 @@
-body {
+/* body {
   display: flex;
   min-height: 100vh;
   font-family: Arial, sans-serif;
@@ -54,4 +54,141 @@ body {
 .card h3 {
   margin-top: 0.5rem;
   color: #0ea5e9;
+} */
+
+
+/* General layout */
+body {
+  display: flex;
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  background-color: #f8f9fa;
 }
+
+/* Sidebar */
+.sidebar {
+  width: 250px;
+  background-color:#1f2937;
+  color: white;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  transition: width 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 1rem;
+  overflow: hidden;
+}
+
+/* Collapsed Sidebar */
+.sidebar.collapsed {
+  width: 80px;
+}
+
+.sidebar.collapsed .text,
+.sidebar.collapsed #agentName {
+  display: none;
+}
+
+.sidebar.collapsed .sidebar-header {
+  justify-content: center;
+}
+
+.sidebar.collapsed .logo {
+  width: 40px;
+}
+
+/* Sidebar Header */
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 85%;
+  margin-bottom: 1rem;
+}
+
+.sidebar-header .logo {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgb(46, 17, 17);
+}
+.card-header.bg-color{
+  background-color: #1f2937;
+}
+
+#toggleBtn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+/* Profile */
+.profile-img {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid white;
+  margin-bottom: 0.5rem;
+}
+
+/* Links */
+.sidebar-links {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  text-align: left;
+}
+
+.sidebar-links a {
+  color: white;
+  text-decoration: none;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  transition: background 0.3s;
+}
+
+.sidebar-links a:hover {
+  background-color: #495057;
+}
+
+.sidebar-links .icon {
+  display: inline-block;
+  font-size: 1.4rem;
+  width: 35px;
+  text-align: center;
+  margin-right: 10px;
+}
+
+/* Content area */
+.content {
+  margin-left: 250px;
+  padding: 2rem;
+  transition: margin-left 0.3s ease;
+  width: 100%;
+}
+
+.sidebar.collapsed ~ .content {
+  margin-left: 80px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .sidebar {
+    position: fixed;
+    z-index: 1000;
+    height: 100vh;
+  }
+
+  .content {
+    margin-left: 80px;
+  }
+}
+
