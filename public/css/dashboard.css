@@ -1,10 +1,8 @@
+/* General layout */
 body {
   display: flex;
   margin: 0;
   font-family: Arial, sans-serif;
-}
-.card-body {
-  width: 600px;
 }
 
 /* Sidebar style */
@@ -18,27 +16,62 @@ body {
   color: #fff;
   overflow-y: auto;
   z-index: 1000;
+  display: flex;
   flex-direction: column;
-  transition: all 0.3s ease;
+  align-items: center;
+  transition: width 0.3s ease;
 }
 
 .sidebar.collapsed {
   width: 80px;
 }
 
+.sidebar-header {
+  position: relative; /* makes absolute positioning relative to sidebar header */
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  /* justify-content: space-between;
+ 
+  margin-top: 1rem; */
+   padding: 20px;
+}
+
+#sidebarToggle {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: none;
+  border: none;
+  color: white;
+  /* font-size: 1.5rem; */
+  cursor: pointer;
+  /* margin-bottom: 2rem; */
+}
+
+
+/* Sidebar logo/profile image */
 .sidebar .profile-img {
   width: 70px;
   height: 70px;
   border-radius: 50%;
   object-fit: cover;
-  margin: 20px auto;
+  border: 2px solid white;
+  /* display: block; */
+  margin-top: 40px;
+  /* transition: width 0.3s ease, height 0.3s ease margin-top 0.3s ease; */
+
 }
 
-.sidebar h4 {
-  text-align: center;
-  margin-bottom: 20px;
+/* Smaller logo when collapsed */
+.sidebar.collapsed .profile-img {
+  width: 40px;
+  height: 40px;
+  margin-top: 20px;
 }
 
+/* Sidebar links */
 .sidebar a {
   display: flex;
   align-items: center;
@@ -48,10 +81,34 @@ body {
   margin: 5px 0;
   border-radius: 5px;
   font-size: 14px;
+  transition: padding 0.3s ease;
 }
 
 .sidebar a:hover {
   background: #34495e;
+}
+
+/* Icons inside links */
+.sidebar .icon {
+  font-size: 1.4rem;
+  width: 35px;
+  text-align: center;
+  margin-right: 10px;
+  transition: margin-right 0.3s ease;
+}
+.sidebar .text{
+  font-size: 1rem;
+}
+
+/* Hide link text when collapsed */
+.sidebar.collapsed a span.text {
+  display: none;
+}
+
+/* Center icons when collapsed */
+.sidebar.collapsed a {
+  justify-content: center;
+  padding: 10px;
 }
 
 /* Content style */
@@ -63,16 +120,28 @@ body {
   transition: margin-left 0.3s ease;
 }
 
-/* Adjust when sidebar collapsed */
+/* Adjust content when sidebar collapsed */
 .sidebar.collapsed + .content {
   margin-left: 80px;
 }
 
+/* Cards styling */
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 12px;
+  padding: 15px;
+}
+
+/* Form label spacing */
 .form-label span {
   margin-left: 3px;
   width: 300px;
 }
-/* Container limit for professional look */
+
+/* Container width for professionalism */
 .content .container {
   max-width: 1400px;
 }
@@ -83,16 +152,6 @@ body {
   flex-direction: column;
 }
 
-/* Card styling */
-.card {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border-radius: 12px;
-  padding: 15px;
-}
-
 /* Sidebar responsiveness */
 @media (max-width: 992px) {
   .sidebar {
@@ -101,7 +160,7 @@ body {
     height: auto;
   }
   .content {
-    margin-left: 0; /* remove margin so cards are fully visible */
+    margin-left: 0;
   }
 }
 
