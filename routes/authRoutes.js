@@ -73,11 +73,11 @@ router.post("/login", async (req, res) => {
 
     // Redirect based on role
     if (user.role === "Manager") {
-      return res.redirect("/manager-dashboard");
+      return res.redirect("https://mwfweb-based-system.netlify.app/manager-dashboard");
     } else if (user.role === "Sales-Agent") {
       return res.redirect("/sales-agent-dashboard");
     } else {
-      return res.redirect("/login");
+      return res.redirect("https://mwfweb-based-system.netlify.app/login");
     }
   } catch (err) {
     console.error(err);

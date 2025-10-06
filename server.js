@@ -6,7 +6,7 @@ const passport = require("passport");
 const expressSession = require("express-session");
 const MongoStore = require("connect-mongo");
 const methodOverride = require("method-override");
-
+const cors = require("cors");
 
 require("dotenv").config();
 
@@ -82,6 +82,13 @@ app.use(async (req, res, next) => {
 app.get("/", (req, res) => {
   res.render("landingPage");
 });
+
+//allowing the request from the frontend
+app.use(cors({
+  origin: "https://mwfweb-based-system.netlify.app",
+  credentials: true
+}));
+
 app.use("/", authRoutes);
 app.use("/", furnitureStockRoutes);
 app.use("/", woodStockRoutes);
