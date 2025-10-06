@@ -75,7 +75,7 @@ router.post("/login", async (req, res) => {
     if (user.role === "Manager") {
       return res.redirect("https://mwfweb-based-system.netlify.app/manager-dashboard");
     } else if (user.role === "Sales-Agent") {
-      return res.redirect("/sales-agent-dashboard");
+      return res.redirect("https://mwfweb-based-system.netlify.app/sales-agent-dashboard");
     } else {
       return res.redirect("https://mwfweb-based-system.netlify.app/login");
     }
