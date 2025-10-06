@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js",
+    "start": "node server.js",
     "dev": "nodemon app.js"
   },
   "repository": {
@@ -34,9 +34,11 @@
     "bcrypt": "^6.0.0",
     "bcryptjs": "^3.0.2",
     "connect-mongo": "^5.1.0",
+    "cors": "^2.8.5",
     "dotenv": "^17.2.2",
     "express": "^5.1.0",
     "express-session": "^1.18.2",
+    "method-override": "^3.0.0",
     "mongoose": "^8.18.0",
     "multer": "^2.0.2",
     "passport": "^0.7.0",
