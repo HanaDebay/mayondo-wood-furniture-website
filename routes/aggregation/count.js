@@ -18,13 +18,31 @@ router.get("/count", ensureAuthenticated, ensureManager, async (req, res) => {
   }
 });
 
-router.get("/revenu", ensureAuthenticated, ensureManager, async(req, res) => {
+router.get("/monthly-revenue", ensureAuthenticated, ensureManager, async(req, res) => {
 try {
-  const result = await Sale.aggregate([
-    {$group: {_id: null, totalRevenue: {$sum: "$totalAmount"}}}
-  ]);
-  const revenue = result[0]?.totalRevenue || 0;
-  res.render("managerDashboard", {revenue})
+  const now = new Date();
+  const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+  const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+ const result = await Sale.aggregate([
+      {
+        $match: {
+          dateOfSale: { $gte: startOfMonth, $lte: endOfMonth },
+        },
+      },
+      {
+        $group: {
+          _id: null,
+          totalRevenueThisMonth: {
+            $sum: {
+              $subtract: ["$totalCost", { $multiply: ["$sellingPrice", "$quantity"] }],
+            },
+          },
+        },
+      },
+    ]);
+  const totalRevenueThisMonth = result[0]?.totalRevenueThisMonth || 0;
+  // res.render("managerDashboard", {totalRevenueThisMonth})
+  res.json({totalRevenueThisMonth});
 } catch (error) {
   console.error("Error calculating revenue:", err)
   res.status(500).send("Server error");

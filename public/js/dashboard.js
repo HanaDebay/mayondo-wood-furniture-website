@@ -213,7 +213,25 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 });
 
+// fetch("/monthly-revenu")
+// .then(res => res.json())
+// .then(data => document.getElementById("revenu").textContent =data.totalRevenuThisMonth)
 
+async function fetchMonthlyRevenue() {
+  try {
+    const response = await fetch("/monthly-revenue");
+    const data = await response.json();
+    document.getElementById(
+      "revenu"
+    ).textContent = `${data.totalRevenueThisMonth.toLocaleString()} UGX`;
+  } catch (error) {
+    console.error(error);
+    document.getElementById("revenu").textContent =
+      "Error fetching data";
+  }
+}
+
+fetchMonthlyRevenue();
 fetchProfitMargin();
 fetchTotalPurchase();
 loadManagerDashboard();
