@@ -148,9 +148,9 @@ router.get("/manager-dashboard", ensureAuthenticated, ensureManager, async (req,
     const purchase = (totalPurchaseWood[0]?.total || 0) +
                      (totalPurchaseFurniture[0]?.total || 0);
 
-    console.log("Total Sales:", sales);
-    console.log("Total Purchase:", purchase);
-    console.log("Revenue:", sales - purchase);
+    // console.log("Total Sales:", sales);
+    // console.log("Total Purchase:", purchase);
+    // console.log("Revenue:", sales - purchase);
     
 
 

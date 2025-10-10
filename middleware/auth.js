@@ -22,7 +22,6 @@ exports.ensureManager = (req, res, next) => {
   if(req.session.user && req.session.role === "Manager"){
       return next();
   } else {
-      // Optionally flash a message
     //   return res.status(403).send("Access denied. Only managers can view this page.");
         return res.redirect("/login");
     }

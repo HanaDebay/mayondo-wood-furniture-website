@@ -41,9 +41,8 @@ async function loadManagerDashboard() {
       });
     }
 
-    // =====================
+
     // ACTIVITY LOG
-    // =====================
     const activityTbody = document.querySelector("table tbody");
     if (activityTbody) {
       activityTbody.innerHTML = "";
@@ -60,11 +59,9 @@ async function loadManagerDashboard() {
       });
     }
 
-    // =====================
+ 
     // CHARTS
-    // =====================
-
-    // 🔹 Sales per Agent
+    // Sales per Agent
     const barCtx = document.querySelector("#barChart")?.getContext("2d");
     if (barCtx) {
       new Chart(barCtx, {

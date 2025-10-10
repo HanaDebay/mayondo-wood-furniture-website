@@ -80,14 +80,18 @@ app.use(async (req, res, next) => {
   next();
 });
 app.get("/", (req, res) => {
-  res.render("landingPage");
+  res.render("index");
 });
 
+// app.get("/", (req, res) => {
+//   res.sendFile(path.join(__dirname, "public","index.html"));
+// });
+
 //allowing the request from the frontend
-app.use(cors({
-  origin: "https://mwfweb-based-system.netlify.app",
-  credentials: true
-}));
+// app.use(cors({
+//   origin: "https://mwfweb-based-system.netlify.app",
+//   credentials: true
+// }));
 
 app.use("/", authRoutes);
 app.use("/", furnitureStockRoutes);

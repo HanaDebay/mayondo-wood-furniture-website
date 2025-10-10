@@ -67,17 +67,17 @@ router.post("/login", async (req, res) => {
       return res.redirect("/login?error=Invalid credentials");
     }
 
-    // ✅ Store user and role in session
+    //Store user and role in session
     req.session.user = user;
     req.session.role = user.role; // "Sales-Agent" or "Manager"
 
     // Redirect based on role
     if (user.role === "Manager") {
-      return res.redirect("https://mwfweb-based-system.netlify.app/manager-dashboard");
+      return res.redirect("/manager-dashboard");
     } else if (user.role === "Sales-Agent") {
-      return res.redirect("https://mwfweb-based-system.netlify.app/sales-agent-dashboard");
+      return res.redirect("/sales-agent-dashboard");
     } else {
-      return res.redirect("https://mwfweb-based-system.netlify.app/login");
+      return res.redirect("/login");
     }
   } catch (err) {
     console.error(err);

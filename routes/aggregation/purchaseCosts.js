@@ -4,7 +4,7 @@ const FurnitureStock = require("../../models/furnitureStockModel");
 const WoodStock = require("../../models/woodStockModel");
 const { ensureAuthenticated, ensureManager } = require("../../middleware/auth");
 
-// 🔹 Total Furniture Cost
+// Total Furniture Cost
 router.get("/totalFurnitureCost", ensureAuthenticated, ensureManager,async (req, res) => {
     try {
       const furnitureTotals = await FurnitureStock.aggregate([
@@ -27,7 +27,7 @@ router.get("/totalFurnitureCost", ensureAuthenticated, ensureManager,async (req,
     }
   }
 );
-// 🔹 Total Wood Cost
+// Total Wood Cost
 router.get("/totalWoodCost",ensureAuthenticated, ensureManager, async (req, res) => {
     try {
       const woodTotals = await WoodStock.aggregate([

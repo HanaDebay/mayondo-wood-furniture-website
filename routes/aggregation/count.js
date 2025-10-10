@@ -31,7 +31,6 @@ try {
 }
 });
 
-
 router.get("/total-sales", ensureAuthenticated, ensureManager, async (req, res) => {
   try {
     const now = new Date();

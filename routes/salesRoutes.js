@@ -9,7 +9,7 @@ const FurnitureStock = require("../models/furnitureStockModel");
 
 
 
-// GET: Record Sale Form (Sales Agent only)
+// Record Sale Form (Sales Agent only)
 router.get("/record-sale", ensureAuthenticated, ensureSalesAgent, async (req, res) => {
   try {
     const woodStocks = await WoodStock.find();
@@ -26,7 +26,7 @@ router.get("/record-sale", ensureAuthenticated, ensureSalesAgent, async (req, re
   }
 });
 
-// POST: Save Sale Record (Sales Agent only)
+// Save Sale Record (Sales Agent only)
 router.post("/record-sale", ensureAuthenticated, ensureSalesAgent, async (req, res) => {
   try {
     const { productId, productType, quantity, paymentMethod, customerName, transportation, dateOfSale } = req.body;
@@ -79,7 +79,7 @@ router.post("/record-sale", ensureAuthenticated, ensureSalesAgent, async (req, r
   }
 });
 
-// GET: My Sales (Agent can only see their sales)
+// My Sales (Agent can only see their sales)
 router.get("/my-sales", ensureAuthenticated, ensureSalesAgent, async (req, res) => {
   try {
     const sales = await Sale.find({ salesAgent: req.session.user._id });
@@ -90,13 +90,13 @@ router.get("/my-sales", ensureAuthenticated, ensureSalesAgent, async (req, res) 
   }
 });
 
-// GET: All Sales (Manager only)
+// All Sales (Manager only)
 router.get("/all-sales", ensureAuthenticated, ensureManager, async (req, res) => {
   try {
     const sales = await Sale.find({salesAgent: {$ne: null}})
       .populate("salesAgent", "username fullName")
       .populate("productId");
-console.log("Sales Fetched:", sales)
+// console.log("Sales Fetched:", sales)
     res.render("allSales", { sales });
   } catch (err) {
     console.error("Error fetching all sales:", err);
@@ -160,6 +160,41 @@ console.log("Sales Fetched:", sale)
   } catch (err) {
     console.error("Error fetching all sales:", err);
     res.status(400).send("Unable to find a sale");
+  }
+});
+
+router.get("/total-sales", ensureAuthenticated, ensureManager, async (req, res) => {
+  try {
+    const now = new Date();
+    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+    const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+
+    // Sum totalCost for all sales within the current month
+    const result = await Sale.aggregate([
+      {
+        $match: {
+          dateOfSale: { $gte: startOfMonth, $lte: endOfMonth },
+        },
+      },
+      {
+        $group: {
+          _id: null,
+          totalSalesThisMonth: { $sum: "$totalCost" },
+        },
+      },
+    ]);
+
+    const totalSalesThisMonth = result[0]?.totalSalesThisMonth || 0;
+
+    // Option 1: If rendering directly
+    // res.render("managerDashboard", { totalSalesThisMonth });
+
+    // Option 2: If updating dynamically via fetch()
+    res.json({ totalSalesThisMonth });
+
+  } catch (err) {
+    console.error("Error calculating total sales:", err);
+    res.status(500).send("Server error");
   }
 });
 
