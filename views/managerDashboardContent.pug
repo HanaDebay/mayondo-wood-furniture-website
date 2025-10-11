@@ -30,7 +30,7 @@ block content
           i.fas.fa-boxes.fa-2x.text-danger.mb-2
           h6 Low Stock
           ul#lowStockList
-            li Loading...
+            li 
 
     // Row 2 KPI Cards
     .row.g-4.mb-5
@@ -39,7 +39,7 @@ block content
           i.fas.fa-percent.text-primary.fa-2x.mb-2
           h6 Profit Margin
           h6 Current Report
-          span#profitMargin 0%
+          span#grossProfit #{grossProfit.toLocaleString()} UGX
 
       .col-12.col-md-6.col-lg-3
         .card.p-3.text-center.bg-light.border-0.shadow-sm

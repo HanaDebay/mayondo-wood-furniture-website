@@ -3,6 +3,8 @@ const router = express.Router();
 const User = require("../../models/userModel");
 const Supplier = require("../../models/supplierModel");
 const Sale = require("../../models/salesModel");
+const FurnitureStock = require("../../models/furnitureStockModel");
+const WoodStock = require("../../models/woodStockModel");
 
 const { ensureAuthenticated, ensureManager } = require("../../middleware/auth");
 
@@ -108,6 +110,26 @@ router.get("/total-sales", ensureAuthenticated, ensureManager, async (req, res) 
   } catch (err) {
     console.error("Error calculating total sales:", err);
     res.status(500).send("Server error");
+  }
+});
+
+router.get("/low-stock", async (req, res) => {
+  try {
+    const threshold = req.query.threshold ? parseInt(req.query.threshold) : 5;
+
+    // Find low-stock furniture
+    const lowFurniture = await FurnitureStock.find({ quantity: { $lt: threshold } });
+
+    // Find low-stock wood
+    const lowWood = await WoodStock.find({ quantity: { $lt: threshold } });
+
+    res.status(200).json({
+      furniture: lowFurniture,
+      wood: lowWood
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Server error" });
   }
 });
 

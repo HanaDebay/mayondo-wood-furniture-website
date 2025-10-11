@@ -3,6 +3,7 @@ const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
 
+const Purchase = require("../models/purchaseModel");
 const Sale = require("../models/salesModel");
 const User = require("../models/userModel");
 const Supplier = require("../models/supplierModel");
@@ -153,6 +154,20 @@ router.get("/manager-dashboard", ensureAuthenticated, ensureManager, async (req,
     // console.log("Revenue:", sales - purchase);
     
 
+     // Total Sales (sum of totalCost in Sale collection)
+    const totalSalesResult = await Sale.aggregate([
+      { $group: { _id: null, totalSales: { $sum: "$totalCost" } } }
+    ]);
+    const totalSalesProfit = Number(totalSalesResult[0]?.totalSalesProfit || 0);
+
+    // Total Purchases (sum of totalPurchaseCost in Purchase collection)
+    const totalPurchaseResult = await Purchase.aggregate([
+      { $group: { _id: null, totalPurchase: { $sum: "$totalPurchaseCost" } } }
+    ]);
+    const totalPurchase = Number(totalPurchaseResult[0]?.totalPurchase || 0);
+
+    // Calculate Gross Profit
+    const grossProfit = totalSalesProfit - totalPurchase;
 
     res.render("managerDashboardContent", {
       manager: req.session.user,
@@ -168,7 +183,11 @@ router.get("/manager-dashboard", ensureAuthenticated, ensureManager, async (req,
       salesTrend,
       revenue: sales - purchase, 
       sales, 
-      purchase 
+      purchase,
+      totalSalesProfit,
+      totalPurchase,
+      grossProfit
+
     });
 
   } catch (error) {

@@ -125,52 +125,6 @@ async function loadManagerDashboard() {
   }
 }
 
-// async function loadPurchaseCosts() {
-//   const woodResp = await fetch("/totalWoodCost");
-//   const woodData = await woodResp.json();
-//   document.querySelector("#woodCost").textContent = woodData.totalWoodCost.toLocaleString() + " UGX";
-
-//   const furnitureResp = await fetch("/totalFurnitureCost");
-//   const furnitureData = await furnitureResp.json();
-//   document.querySelector("#furnitureCost").textContent = furnitureData.totalFurnitureCost.toLocaleString() + " UGX";
-
-//   const total = woodData.totalWoodCost + furnitureData.totalFurnitureCost;
-//   document.querySelector("#totalPurchase").textContent = total.toLocaleString() + " UGX";
-// }
-
-// document.addEventListener("DOMContentLoaded", async () => {
-//   try {
-//     // Fetch Revenue + Sales + Purchase
-//     const revenueRes = await fetch("/manager-dashboard");
-//     const revenueData = await revenueRes.json();
-
-//     document.getElementById("totalSales").textContent =
-//       new Intl.NumberFormat().format(revenueData.totalSales) + " UGX";
-//     document.getElementById("totalPurchase").textContentext =
-//       new Intl.NumberFormat().format(revenueData.totalPurchase) + " UGX";
-//     document.getElementById("revenue").textContentt =
-//       new Intl.NumberFormat().format(revenueData.revenue) + " UGX";
-
-//     // Fetch Low Stock
-//     const stockRes = await fetch("/manager-dashboard");
-//     const stockData = await stockRes.json();
-
-//     const lowStockList = document.getElementById("lowStockList");
-//     lowStockList.innerHTML = ""; // Clear default text
-//     if (stockData.length === 0) {
-//       lowStockList.innerHTML = "<li>No low stock items ✅</li>";
-//     } else {
-//       stockData.forEach(item => {
-//         const li = document.createElement("li");
-//         li.innerText = `${item.productName} (${item.quantity} left)`;
-//         lowStockList.appendChild(li);
-//       });
-//     }
-//   } catch (err) {
-//     console.error("Error loading dashboard data:", err);
-//   }
-// });
-
 async function fetchTotalPurchase() {
   try {
     const response = await fetch("/totalPurchase");
@@ -185,18 +139,41 @@ async function fetchTotalPurchase() {
   }
 }
 
-async function fetchProfitMargin() {
-  try {
-    const res = await fetch("/profitMargin"); // API we built earlier
-    const data = await res.json();
-    document.getElementById(
-      "profitMargin"
-    ).textContent = `${data.profitMargin}%`;
-  } catch (error) {
-    console.error(error);
-    document.getElementById("profitMargin").textContent = "Error";
+// async function fetchProfitMargin() {
+//   try {
+//       const res = await fetch("/profit-margin");
+//       const data = await res.json();
+
+//       document.getElementById("profitMargin").textContent = `${data.profitMargin}%`;
+//       // optional: show profit too if you have an element for it
+//       if (document.getElementById("profit")) {
+//         document.getElementById("profit").textContent = `${data.profit} UGX`;
+//       }
+//     } catch (error) {
+//       console.error("Error fetching profit margin:", error);
+//       document.getElementById("profitMargin").textContent = "Error";
+//     }
+//   }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    fetchProfitMargin();
+  });
+
+  async function fetchProfitMargin() {
+    try {
+      const res = await fetch("/profit-margin");
+      const data = await res.json();
+
+      document.getElementById("profitMargin").textContent = `${data.profitMargin}%`;
+      // optional: show profit too if you have an element for it
+      if (document.getElementById("profit")) {
+        document.getElementById("profit").textContent = `${data.profit} UGX`;
+      }
+    } catch (error) {
+      console.error("Error fetching profit margin:", error);
+      document.getElementById("profitMargin").textContent = "Error";
+    }
   }
-}
 
 document.addEventListener("DOMContentLoaded", async () => {
   const totalSalesElement = document.getElementById("totalSales");
@@ -227,8 +204,52 @@ async function fetchMonthlyRevenue() {
   }
 }
 
+async function loadLowStock() {
+  const ul = document.getElementById("lowStockList");
+  ul.innerHTML = ""; 
+
+  try {
+    const response = await fetch("/low-stock"); 
+    const data = await response.json();
+
+    // Combine furniture and wood
+    const lowStockItems = [
+      ...data.furniture.map(item => ({
+        name: item.productName,
+        type: "Furniture",
+        quantity: item.quantity
+      })),
+      ...data.wood.map(item => ({
+        name: item.productName,
+        type: "Wood",
+        quantity: item.quantity
+      }))
+    ];
+
+    if (lowStockItems.length === 0) {
+      ul.innerHTML = `<li class="text-success">All products sufficiently stocked!</li>`;
+      return;
+    }
+
+    // Populate list
+    lowStockItems.forEach(item => {
+      const li = document.createElement("li");
+      li.textContent = `${item.name} (${item.type}) - Qty: ${item.quantity}`;
+      ul.appendChild(li);
+    });
+
+  } catch (err) {
+    console.error(err);
+    ul.innerHTML = `<li class="text-danger">Error loading low stock</li>`;
+  }
+}
+
+// Call on page load
+loadLowStock();
+
+
 fetchMonthlyRevenue();
-fetchProfitMargin();
+// fetchProfitMargin();
 fetchTotalPurchase();
 loadManagerDashboard();
 // loadPurchaseCosts();
