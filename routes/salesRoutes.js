@@ -82,8 +82,8 @@ router.post("/record-sale", ensureAuthenticated, ensureSalesAgent, async (req, r
 // My Sales (Agent can only see their sales)
 router.get("/my-sales", ensureAuthenticated, ensureSalesAgent, async (req, res) => {
   try {
-    const sales = await Sale.find({ salesAgent: req.session.user._id });
-    res.render("mySales", { sales });
+    const sale = await Sale.find({ salesAgent: req.session.user._id });
+    res.render("mySales", { sale });
   } catch (err) {
     console.error(err);
     res.status(500).send("Error loading your sales");
@@ -93,11 +93,11 @@ router.get("/my-sales", ensureAuthenticated, ensureSalesAgent, async (req, res) 
 // All Sales (Manager only)
 router.get("/all-sales", ensureAuthenticated, ensureManager, async (req, res) => {
   try {
-    const sales = await Sale.find({salesAgent: {$ne: null}})
+    const sale = await Sale.find({salesAgent: {$ne: null}})
       .populate("salesAgent", "username fullName")
       .populate("productId");
 // console.log("Sales Fetched:", sales)
-    res.render("allSales", { sales });
+    res.render("allSales", { sale });
   } catch (err) {
     console.error("Error fetching all sales:", err);
     res.status(500).send("Error loading all sales");

@@ -133,6 +133,19 @@ router.get("/low-stock", async (req, res) => {
   }
 });
 
+router.get("/furniture-stock", async(req, res) => {
+  try {
+    const furnitureCount = await FurnitureStock.countDocuments();
+    res.render("managerDashboardContent",{
+      furnitureCount
+    })
+  } catch (error) {
+     console.error("Error counting stock:", err);
+    res.status(500).send("Server error");
+  }
+});
+
+
 
 
 module.exports = router;
