@@ -79,6 +79,7 @@ app.use(async (req, res, next) => {
   }
   next();
 });
+
 app.get("/", (req, res) => {
   res.render("index");
 });

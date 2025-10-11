@@ -40,18 +40,18 @@ router.post("/record-sale", ensureAuthenticated, ensureSalesAgent, async (req, r
 
     if (!stock) return res.status(404).send("Stock not found");
 
-    // ✅ Check stock availability
+    //Check stock availability
     if (quantity > stock.quantity) {
       return res.status(400).send("Error: Quantity exceeds available stock!");
     }
 
-    // ✅ Calculate total cost
+    // Calculate total cost
     let totalCost = stock.sellingPrice * quantity;
     if (transportation === "company") {
       totalCost += totalCost * 0.05; // add 5%
     }
 
-    // ✅ Create new Sale
+    //  Create new Sale
     const newSale = new Sale({
       productId,
       productName: stock.productName,
@@ -68,7 +68,7 @@ router.post("/record-sale", ensureAuthenticated, ensureSalesAgent, async (req, r
 
     await newSale.save();
 
-    // ✅ Update stock quantity
+    // Update stock quantity
     stock.quantity -= quantity;
     await stock.save();
 

@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const FurnitureStockModel = require("../models/furnitureStockModel");
-
+const Purchase = require("../models/purchaseModel")
 
 router.get("/registerFurniture", (req, res) => {
   res.render("registerFurnitureStock");
@@ -19,6 +19,45 @@ router.post("/registerFurniture", async (req, res) => {
     res.redirect("/registerFurniture");
   }
 });
+
+// router.post("/registerFurniture", async (req, res) => {
+//   try {
+//     const { productName, productType, furnitureType, costPrice, sellingPrice, quantity, supplierName, date } = req.body;
+
+//     // Add to FurnitureStock
+//     const furnitureStock = new FurnitureStockModel({
+//       productName,
+//       productType,
+//       furnitureType,
+//       costPrice,
+//       sellingPrice,
+//       quantity,
+//       supplierName,
+//       date
+//     });
+//     await furnitureStock.save();
+
+//     // Record the purchase
+//     const totalPurchaseCost = costPrice * quantity;
+
+//     const purchaseRecord = new Purchase({
+//       productName,
+//       productType: "FurnitureStock",
+//       quantity,
+//       costPrice,
+//       totalPurchaseCost,
+//       supplierName,
+//       purchaseDate: date || new Date()
+//     });
+
+//     await purchaseRecord.save();
+
+//     res.redirect("/manager-dashboard");
+//   } catch (err) {
+//     console.error("Error registering furniture:", err);
+//     res.redirect("/registerFurniture");
+//   }
+// });
 
 router.get("/view-furniure-stock", async (req, res) => {
   try {

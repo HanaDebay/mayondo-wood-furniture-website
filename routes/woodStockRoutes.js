@@ -20,6 +20,44 @@ router.post("/registerWood", async (req, res) => {
   }
 });
 
+// router.post("/registerWood", async (req, res) => {
+//   try {
+//     const { productName, productType, costPrice, sellingPrice, quantity, supplierName, date } = req.body;
+
+//     // 1️⃣ Add to WoodStock
+//     const woodStock = new WoodStockModel({
+//       productName,
+//       productType,
+//       costPrice,
+//       sellingPrice,
+//       quantity,
+//       supplierName,
+//       date
+//     });
+//     await woodStock.save();
+
+//     // 2️⃣ Record the purchase
+//     const totalPurchaseCost = costPrice * quantity;
+
+//     const purchaseRecord = new Purchase({
+//       productName,
+//       productType: "WoodStock",
+//       quantity,
+//       costPrice,
+//       totalPurchaseCost,
+//       supplierName,
+//       purchaseDate: date || new Date()
+//     });
+
+//     await purchaseRecord.save();
+
+//     res.redirect("/manager-dashboard");
+//   } catch (err) {
+//     console.error("Error registering wood stock:", err);
+//     res.redirect("/registerWood");
+//   }
+// });
+
 router.get("/view-wood-stock", async (req, res) => {
   try {
     let wood = await WoodStockModel.find();

@@ -213,10 +213,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 });
 
-// fetch("/monthly-revenu")
-// .then(res => res.json())
-// .then(data => document.getElementById("revenu").textContent =data.totalRevenuThisMonth)
-
 async function fetchMonthlyRevenue() {
   try {
     const response = await fetch("/monthly-revenue");

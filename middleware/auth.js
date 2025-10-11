@@ -8,8 +8,8 @@ exports.ensureAuthenticated = (req ,res,next) => {
 
 //Ensure user is a Sales-Agent
 exports.ensureSalesAgent = (req ,res,next) => {
-    console.log("Session user:", req.session.user);
-    console.log("Session role:", req.session.role);
+    // console.log("Session user:", req.session.user);
+    // console.log("Session role:", req.session.role);
 
     if(req.session.user && req.session.role === "Sales-Agent"){
         return next()

@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const FurnitureStock = require("../../models/furnitureStockModel");
 const WoodStock = require("../../models/woodStockModel");
+const Purchase = require("../../models/purchaseModel")
 const { ensureAuthenticated, ensureManager } = require("../../middleware/auth");
 
 // Total Furniture Cost
@@ -76,5 +77,20 @@ router.get("/totalPurchase", async (req, res) => {
     res.status(500).json({ message: "Error calculating total purchase" });
   }
 });
+
+// router.get("/totalPurchase", async (req, res) => {
+//   try {
+//     const result = await Purchase.aggregate([
+//       { $group: { _id: null, totalPurchase: { $sum: "$totalPurchaseCost" } } }
+//     ]);
+
+//     const totalPurchase = result[0]?.totalPurchase || 0;
+//     res.json({ totalPurchase });
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).json({ message: "Error calculating total purchase" });
+//   }
+// });
+
 
 module.exports = router;
