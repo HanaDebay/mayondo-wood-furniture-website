@@ -24,59 +24,26 @@ block content
           i.fas.fa-users.fa-2x.text-warning.mb-2
           h5 Revenue(This Month)
           h4#revenu 
-
       .col-12.col-md-6.col-lg-3
         .card.p-3.text-center.bg-light.border-0.shadow-sm
           i.fas.fa-boxes.fa-2x.text-danger.mb-2
-          h6 Low Stock
-          ul#lowStockList
-            li 
-
-    // Row 2 KPI Cards
-    .row.g-4.mb-5
-      .col-12.col-md-6.col-lg-3
-        .card.p-3.text-center.bg-light.border-0.shadow-sm
-          i.fas.fa-percent.text-primary.fa-2x.mb-2
-          h6 Profit Margin
-          h6 Current Report
-          span#grossProfit #{grossProfit.toLocaleString()} UGX
-
-      .col-12.col-md-6.col-lg-3
-        .card.p-3.text-center.bg-light.border-0.shadow-sm
-          i.fas.fa-users.fa-2x.text-warning.mb-2
-          h6 Sales Agents
-          h4#totalAgents #{attendantsCount}
-
-      .col-12.col-md-6.col-lg-3
-        .card.p-3.text-center.bg-light.border-0.shadow-sm
-          i.fas.fa-boxes.fa-2x.text-danger.mb-2
-          h6 Stock Items
-          h4#totalStock= furnitureCount
-
-      .col-12.col-md-6.col-lg-3
-        .card.p-3.text-center.bg-light.border-0.shadow-sm
-          i.fas.fa-money-bill-wave.fa-2x.text-success.mb-2
-          h6 Total Sales
-          h4#totalSales #{new Intl.NumberFormat().format(totalSalesThisMonth)} UGX
+          h5 Total Stock
+          h4#totalStock 
 
     // Charts
     .row.g-4.mb-5
       .col-12.col-lg-6
-        .card.p-3
-          h5.card-title Sales per Agent
-          canvas#barChart(width="400" height="200")
-
+        .d-flex.flex-column.gap-3
+          .card.p-3.flex-fill
+            h5.card-title Sales per Agent
+            canvas#barChart(width="400" height="200")
+          .card.p-3.flex-fill
+            h5.card-title Monthly Sales
+            canvas#lineChart(width="400" height="200")
       .col-12.col-lg-6
-        .card.p-3
+        .card.p-3.h-100
           h5.card-title Category Breakdown
           canvas#pieChart(width="400" height="200")
-
-      .col-12.col-lg-6
-        .card.p-3
-          h5.card-title Monthly Sales
-          canvas#lineChart(width="400" height="200")
-
-    // Top Customers & Activity Log
     .row.g-4.mb-5
       .col-12.col-lg-6
         .card.h-100.d-flex.flex-column

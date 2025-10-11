@@ -244,6 +244,27 @@ async function loadLowStock() {
   }
 }
 
+async function loadTotalStock() {
+  const totalStockElem = document.getElementById("totalStock");
+  try {
+    const res = await fetch("/total-stock", {
+      headers: { Accept: "application/json" }
+    });
+    const data = await res.json();
+    totalStockElem.textContent = data.totalStock;
+  } catch (err) {
+    console.error(err);
+    totalStockElem.textContent = "Error";
+  }
+}
+
+// Call on page load
+loadTotalStock();
+
+
+
+
+
 // Call on page load
 loadLowStock();
 

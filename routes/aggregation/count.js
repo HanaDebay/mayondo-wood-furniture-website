@@ -133,14 +133,18 @@ router.get("/low-stock", async (req, res) => {
   }
 });
 
-router.get("/furniture-stock", async(req, res) => {
+router.get("/total-stock", async(req, res) => {
   try {
     const furnitureCount = await FurnitureStock.countDocuments();
-    res.render("managerDashboardContent",{
-      furnitureCount
+    const woodCount = await WoodStock.countDocuments();
+     const totalStock = furnitureCount + woodCount;
+    res.json({
+      furnitureCount,
+      woodCount,
+      totalStock
     })
   } catch (error) {
-     console.error("Error counting stock:", err);
+      console.error("Error counting stock:", err);
     res.status(500).send("Server error");
   }
 });

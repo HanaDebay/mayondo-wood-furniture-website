@@ -93,11 +93,11 @@ router.get("/my-sales", ensureAuthenticated, ensureSalesAgent, async (req, res) 
 // All Sales (Manager only)
 router.get("/all-sales", ensureAuthenticated, ensureManager, async (req, res) => {
   try {
-    const sale = await Sale.find({salesAgent: {$ne: null}})
+    const sales = await Sale.find({salesAgent: {$ne: null}})
       .populate("salesAgent", "username fullName")
       .populate("productId");
 // console.log("Sales Fetched:", sales)
-    res.render("allSales", { sale });
+    res.render("allSales", { sales });
   } catch (err) {
     console.error("Error fetching all sales:", err);
     res.status(500).send("Error loading all sales");
