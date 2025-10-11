@@ -82,8 +82,8 @@ router.post("/record-sale", ensureAuthenticated, ensureSalesAgent, async (req, r
 // My Sales (Agent can only see their sales)
 router.get("/my-sales", ensureAuthenticated, ensureSalesAgent, async (req, res) => {
   try {
-    const sale = await Sale.find({ salesAgent: req.session.user._id });
-    res.render("mySales", { sale });
+    const sales = await Sale.find({ salesAgent: req.session.user._id });
+    res.render("mySales", { sales });
   } catch (err) {
     console.error(err);
     res.status(500).send("Error loading your sales");

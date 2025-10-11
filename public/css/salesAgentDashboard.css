@@ -119,6 +119,16 @@ body {
 .card-header.bg-color{
   background-color: #1f2937;
 }
+.card {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-20px); /* subtle lift */
+  box-shadow: 0 6px 20px rgba(247, 77, 25, 0.15); /* elegant shadow */
+}
 
 #toggleBtn {
   background: none;
