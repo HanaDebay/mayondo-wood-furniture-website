@@ -23,7 +23,7 @@ const upload = multer({storage})
 
 // GET Routes
 router.get("/register-user", (req, res) => {
-  res.render("userSignup", { manager: req.session.user }); // Pug file name
+  res.render("userSignup", { manager: req.session.user }); 
 });
 
 router.post("/register-user", upload.single("profileImage"), async (req, res) => {
@@ -94,6 +94,37 @@ router.get("/logout", (req, res) => {
     res.clearCookie("connect.sid"); // clear session cookie
     res.redirect("/login"); // redirect to login page
   });
+});
+
+router.get("/register-manager", (req, res) => {
+  res.render("managerSignup"); 
+});
+
+router.post("/register-manager", upload.single("profileImage"), async (req, res) => {
+  try {
+    const { fullName, email, phone, username, password } = req.body;
+
+    // Check if manager already exists
+    const existingManager = await User.findOne({ $or: [{email},{username}] });
+    if (existingManager) {
+      return res.status(400).send("Manager with this email or username already exists!");
+    }
+
+    const manager = new User({
+      fullName,
+      email,
+      phone,
+      username,
+      role: "Manager",
+      profileImage: req.file ? req.file.filename : null
+    });
+
+    await User.register(manager, password);
+    res.redirect("/login");
+  } catch (error) {
+    console.error("Error registering manager:", error);
+    res.status(500).send("Server error. Please try again.");
+  }
 });
 
 
