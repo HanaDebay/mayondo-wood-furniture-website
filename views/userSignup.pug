@@ -22,7 +22,7 @@ block content
               .mb-3
                 label.form-label(for="phone") Phone 
                   span.text-danger *
-                input#phone.form-control(type="tel" name="phone" placeholder="+256 7xx xxx xxx" required pattern="[+0-9\s-]{7,}")
+                input#phone.form-control(type="tel" name="phone" placeholder="+256 7xx xxx xxx" required pattern="^\+?[0-9\s-]{7,15}$")
 
               .mb-3
                 label.form-label(for="username") Username 
